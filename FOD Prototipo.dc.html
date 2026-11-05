@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="stylesheet" href="_ds/finpec-design-system-f2149bfe-f668-44a4-8d88-3a02dff94a5c/styles.css">
+<script src="_ds/finpec-design-system-f2149bfe-f668-44a4-8d88-3a02dff94a5c/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;background:#E6E2DA;height:100%;}
+a{color:var(--primary);text-decoration:none;}
+a:hover{color:var(--primary-hover);text-decoration:underline;}
+</style>
+</helmet>
+<div style="min-height:100vh;font-family:var(--font-ui);color:var(--ink)">
+<div role="toolbar" aria-label="Tweaks do protótipo" style="position:sticky;top:0;z-index:100;height:44px;box-sizing:border-box;display:flex;align-items:center;gap:20px;padding:0 20px;background:#2B2925;border-bottom:1px solid #3A3731;font:500 13px/1 var(--font-ui);color:#D8D3C9;overflow-x:auto;white-space:nowrap">
+  <label style="display:flex;align-items:center;gap:8px;flex:none">layout<span style="position:relative;display:flex;align-items:center"><select value="{{ layVal }}" onChange="{{ onLayout }}" style="height:28px;min-width:150px;padding:0 30px 0 10px;background:#3A3731;border:1px solid #4E4A42;border-radius:6px;color:#F2EFE9;font:500 13px/1 var(--font-ui);appearance:none;-webkit-appearance:none;cursor:pointer;outline:none"><sc-for list="{{ layList }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select><span style="position:absolute;right:8px;display:grid;pointer-events:none;color:#B9B3A8">{{ i.chev }}</span></span></label>
+  <sc-if value="{{ resp }}" hint-placeholder-val="{{ false }}"><label style="display:flex;align-items:center;gap:8px;flex:none">largura<span style="position:relative;display:flex;align-items:center"><select value="{{ larVal }}" onChange="{{ onLargura }}" style="height:28px;min-width:190px;padding:0 30px 0 10px;background:#3A3731;border:1px solid #4E4A42;border-radius:6px;color:#F2EFE9;font:500 13px/1 var(--font-ui);appearance:none;-webkit-appearance:none;cursor:pointer;outline:none"><sc-for list="{{ larList }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select><span style="position:absolute;right:8px;display:grid;pointer-events:none;color:#B9B3A8">{{ i.chev }}</span></span></label></sc-if>
+  <label style="display:flex;align-items:center;gap:8px;flex:none">perfil<span style="position:relative;display:flex;align-items:center"><select value="{{ perfVal }}" onChange="{{ onPerfil }}" style="height:28px;min-width:140px;padding:0 30px 0 10px;background:#3A3731;border:1px solid #4E4A42;border-radius:6px;color:#F2EFE9;font:500 13px/1 var(--font-ui);appearance:none;-webkit-appearance:none;cursor:pointer;outline:none"><sc-for list="{{ perfList }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for></select><span style="position:absolute;right:8px;display:grid;pointer-events:none;color:#B9B3A8">{{ i.chev }}</span></span></label>
+  <span style="display:flex;align-items:center;gap:8px;flex:none">escuro<span onClick="{{ toggleTheme }}" role="switch" aria-checked="{{ isDark }}" style="width:36px;height:20px;box-sizing:border-box;border-radius:100px;background:{{ darkTrack }};border:1px solid #5A554C;position:relative;cursor:pointer"><span style="position:absolute;top:2px;left:{{ darkKnob }};width:14px;height:14px;border-radius:50%;background:#F2EFE9;transition:left .15s"></span></span></span>
+  <sc-if value="{{ pwa }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:8px;flex:none">offline<span onClick="{{ toggleOffline }}" role="switch" aria-checked="{{ offline }}" style="width:36px;height:20px;box-sizing:border-box;border-radius:100px;background:{{ offTrackS }};border:1px solid #5A554C;position:relative;cursor:pointer"><span style="position:absolute;top:2px;left:{{ offKnob }};width:14px;height:14px;border-radius:50%;background:#F2EFE9;transition:left .15s"></span></span></span></sc-if>
+  <span style="margin-left:auto;font:500 12px/1 var(--font-mono);color:#9A9488;flex:none">{{ dims }}</span>
+</div>
+<sc-if value="{{ showHead }}" hint-placeholder-val="{{ false }}">
+<div style="background:var(--bg);border-bottom:1px solid var(--border);padding:20px 32px 18px;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;align-items:center;gap:12px"><img src="assets/finpec-mark.png" alt="" style="height:22px;width:auto"><span style="font:700 14px/1 var(--font-display);letter-spacing:0.18em;color:var(--ink)">FINPEC</span><span style="font:600 11px/1 var(--font-ui);letter-spacing:0.13em;text-transform:uppercase;color:var(--muted)">{{ headSub }}</span></div>
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <div style="max-width:760px"><h1 style="margin:0;font:700 26px/1.15 var(--font-display);letter-spacing:-0.01em;color:var(--ink)">{{ headTitle }}</h1><p style="margin:8px 0 0;font-size:14.5px;line-height:1.5;color:var(--muted);text-wrap:pretty">{{ headDesc }}</p></div>
+  </div>
+</div>
+</sc-if>
+<div style="width:{{ appW }};height:{{ appH }};margin:{{ appM }};border-radius:{{ appR }};border:{{ appB }};box-shadow:{{ appS }};overflow:hidden;position:relative;display:flex;flex-direction:{{ appDir }};background:var(--bg);box-sizing:content-box">
+
+<sc-if value="{{ pwa }}" hint-placeholder-val="{{ false }}">
+  <div style="height:44px;flex:0 0 44px;display:flex;align-items:center;padding:0 24px 0 32px;background:{{ sbBg }};color:{{ sbFg }};font:600 15px/1 var(--font-ui)"><span style="font-variant-numeric:tabular-nums">{{ timeStr }}</span><span style="margin-left:auto;display:flex;align-items:center;gap:6px">{{ i.signal }}{{ i.wifi }}{{ i.battery }}</span></div>
+</sc-if>
+
+<sc-if value="{{ is.login }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:1;display:flex;min-width:0;min-height:0;background:#0F0F0E">
+    <div style="flex:0 0 {{ loginW }};width:{{ loginW }};box-sizing:border-box;background:#0F0F0E;color:#fff;padding:{{ loginPad }};display:flex;flex-direction:column;overflow-y:auto">
+      <div style="display:flex;align-items:center;gap:22px"><img src="assets/finpec-logo-branco.png" alt="FINPEC" style="width:104px;height:auto;flex:none"><div style="min-width:0"><div style="font:500 26px/1.1 var(--font-display);color:#fff">FOD</div><div style="font:400 13px/1.3 var(--font-ui);color:#C9C5BD;text-transform:uppercase;margin-top:12px">FinPec On Demand</div></div></div>
+      <h1 style="font:400 38px/1.2 var(--font-display);letter-spacing:-0.01em;color:#fff;margin:56px 0 0;text-wrap:pretty">Sistema institucional de demandas</h1>
+      <p style="font:400 16px/1.5 var(--font-ui);color:#C9C5BD;margin:40px 0 0;text-wrap:pretty">Solicitações entre áreas, aprovação do CEO, execução, delegação e acompanhamento por indicadores.</p>
+      <div style="margin-top:auto;padding-top:40px">
+        <h2 style="font:400 26px/1.2 var(--font-display);color:#fff;margin:0">Acesse sua conta</h2>
+        <p style="font:400 13px/1.45 var(--font-ui);color:#C9C5BD;margin:14px 0 26px">Use sua conta corporativa Microsoft ou seu e-mail e senha.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <span onClick="{{ login }}" role="button" style="height:68px;width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#1B1A17;border:1px solid #D9D6CF;border-radius:4px;font:500 15px/1 var(--font-ui);cursor:pointer;box-sizing:border-box" style-hover="background:#F4F2EE"><span aria-hidden="true" style="display:grid;grid-template-columns:12px 12px;gap:2px"><span style="width:12px;height:12px;background:#F25022"></span><span style="width:12px;height:12px;background:#7FBA00"></span><span style="width:12px;height:12px;background:#00A4EF"></span><span style="width:12px;height:12px;background:#FFB900"></span></span>Entrar com Microsoft</span>
+          <div style="display:flex;align-items:center;gap:12px;color:#8C877D;font:500 12px/1 var(--font-ui);text-transform:uppercase;letter-spacing:.08em"><span style="flex:1;height:1px;background:#2E2C28"></span>ou<span style="flex:1;height:1px;background:#2E2C28"></span></div>
+          <label><span style="display:block;font:500 13px/1 var(--font-ui);color:#BDB8AE;margin-bottom:8px">E-mail</span><input type="email" value="fernando.sartori@finpec.com" readonly style="width:100%;box-sizing:border-box;height:48px;padding:0 14px;background:#1A1917;border:1px solid #34322D;border-radius:6px;color:#F2EFE9;font:400 15px/1 var(--font-ui);outline:none"></label>
+          <label><span style="display:block;font:500 13px/1 var(--font-ui);color:#BDB8AE;margin-bottom:8px">Senha</span><div style="display:flex;align-items:center;height:48px;background:#1A1917;border:1px solid #34322D;border-radius:6px;padding:0 6px 0 14px;box-sizing:border-box"><input type="{{ pwdType }}" value="homologacao" readonly style="flex:1;min-width:0;background:transparent;border:0;color:#F2EFE9;font:400 15px/1 var(--font-ui);outline:none"><span onClick="{{ togglePwd }}" style="padding:8px 10px;color:#9DB8EC;font:500 13px/1 var(--font-ui);cursor:pointer">{{ pwdLabel }}</span></div></label>
+          <span onClick="{{ login }}" role="button" style="height:52px;width:100%;display:grid;place-items:center;background:var(--primary);color:#fff;border-radius:4px;font:600 15px/1 var(--font-ui);cursor:pointer;margin-top:4px" style-hover="background:var(--primary-hover)">Entrar</span>
+        </div>
+        <p style="font:400 12px/1.4 var(--font-ui);color:#C9C5BD;margin:48px 0 0">Ambiente de homologação · o perfil de acesso segue o Tweak "perfil".</p>
+      </div>
+    </div>
+    <sc-if value="{{ web }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;min-width:0;position:relative;overflow:hidden;background:#3a3128 url('https://www.incmagazine.com.br/wp-content/uploads/2026/06/whatsapp-image-2026-06-10-at-11-09-25.jpeg') center/cover no-repeat">
+        <div style="position:absolute;left:0;top:25%;display:flex;align-items:flex-start">
+          <sc-if value="{{ relOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="width:400px;height:400px;box-sizing:border-box;background:#fff;border-radius:0 0 12px 0;padding:24px 22px;color:#1B1A17;overflow-y:auto">
+              <div style="font:400 17px/1.2 var(--font-ui);margin-bottom:14px">Release notes — Build {{ release }}</div>
+              <details style="border-left:2px solid #E6E8EE;padding:4px 8px;font:400 14px/1.5 var(--font-ui)"><summary style="cursor:pointer">Correções de validação</summary><ul style="margin:6px 0 4px;padding-left:20px;color:#4A4740"><li>Mínimos de título (3) e descrição (10) exibidos no formulário.</li></ul></details>
+              <details style="border-left:2px solid #E6E8EE;padding:4px 8px;font:400 14px/1.5 var(--font-ui)"><summary style="cursor:pointer">Evolução da plataforma</summary><ul style="margin:6px 0 4px;padding-left:20px;color:#4A4740"><li>Nova interface no FINPEC Design System.</li><li>Kanban com colunas de largura fixa.</li></ul></details>
+              <details style="border-left:2px solid #E6E8EE;padding:4px 8px;font:400 14px/1.5 var(--font-ui)"><summary style="cursor:pointer">Requisitos funcionais</summary></details>
+              <details style="border-left:2px solid #E6E8EE;padding:4px 8px;font:400 14px/1.5 var(--font-ui)"><summary style="cursor:pointer">Requisitos não funcionais</summary></details>
+            </div>
+          </sc-if>
+          <span onClick="{{ toggleRel }}" role="button" aria-label="Release notes" style="width:40px;height:400px;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;padding:74px 0 0;background:#fff;border:{{ relBorder }};border-left:0;border-radius:0 10px 10px 0;color:var(--primary);cursor:pointer;box-sizing:border-box">{{ relChev }}<span style="writing-mode:vertical-rl;transform:rotate(180deg);font:400 17px/1 var(--font-ui);white-space:nowrap">{{ release }} Release notes</span></span>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</sc-if>
+
+<sc-if value="{{ inApp }}" hint-placeholder-val="{{ true }}">
+  <sc-if value="{{ web }}" hint-placeholder-val="{{ true }}">
+    <div class="{{ appCls }}" style="width:{{ sideW }};flex:0 0 {{ sideW }};display:flex;flex-direction:column;min-height:0;transition:width .2s cubic-bezier(.4,0,.2,1)">
+      <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Sidebar" brand-word="FINPEC" logo-src="assets/finpec-mark.png" variant="{{ side.variant }}" groups="{{ nav }}" active-id="{{ S.screen }}" on-navigate="{{ navTo }}" collapsed="{{ collapsed }}" on-toggle-collapse="{{ toggleCollapse }}" style="flex:1;min-height:0" hint-size="264px,100%"></x-import>
+      <sc-if value="{{ expanded }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:0 0 auto;background:{{ side.bg }};border-top:1px solid {{ side.border }};border-right:1px solid {{ side.border }};padding:14px 16px 18px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between"><span title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro" onClick="{{ toggleTheme }}" style="width:32px;height:32px;margin-left:-6px;display:grid;place-items:center;border-radius:7px;color:{{ side.ink }};cursor:pointer" style-hover="background:{{ side.hov }}">{{ themeIcon }}</span><span style="font:500 12px/1 var(--font-ui);color:{{ side.dim }}">{{ dateStr }} · <span style="font-family:var(--font-mono)">{{ timeStr }}</span></span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span style="width:38px;height:38px;flex:0 0 38px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--font-display);color:#fff;background:var(--primary)">{{ user.initials }}</span><div style="flex:1;min-width:0;cursor:pointer" onClick="{{ goConta }}"><div style="font:600 14px/1.25 var(--font-ui);color:{{ side.ink }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ user.name }}</div><div style="font:500 12.5px/1.3 var(--font-ui);color:{{ side.sub }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ user.role }}</div></div><span title="Sair" aria-label="Sair" onClick="{{ logout }}" style="width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:7px;color:{{ side.ink }};cursor:pointer" style-hover="background:{{ side.hov }}">{{ i.logoutL }}</span></div><div style="font:500 11.5px/1 var(--font-mono);color:{{ side.dim }}">{{ release }}</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ collapsed }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:0 0 auto;background:{{ side.bg }};border-top:1px solid {{ side.border }};border-right:1px solid {{ side.border }};padding:12px 0 16px;display:flex;flex-direction:column;align-items:center;gap:10px">
+          <span title="Alternar tema claro/escuro" onClick="{{ toggleTheme }}" style="width:32px;height:32px;display:grid;place-items:center;border-radius:7px;color:{{ side.ink }};cursor:pointer">{{ themeIcon }}</span>
+          <span title="{{ user.name }}" style="width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:700 12px/1 var(--font-display);color:#fff;background:var(--primary)">{{ user.initials }}</span>
+          <span title="Sair" onClick="{{ logout }}" style="width:32px;height:32px;display:grid;place-items:center;border-radius:7px;color:{{ side.ink }};cursor:pointer">{{ i.logoutL }}</span>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;min-height:0">
+    <sc-if value="{{ web }}" hint-placeholder-val="{{ true }}">
+      <header style="height:68px;flex:0 0 68px;display:flex;align-items:center;gap:12px;padding:0 32px;background:var(--surface);border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)"><span>On Demand</span><span style="color:var(--faint)">/</span><span style="color:var(--ink);font-weight:600">{{ title }}</span></div>
+        <div style="margin-left:auto"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" size="sm" icon="{{ i.plus }}" onClick="{{ goNova }}" hint-size="140px,32px">Nova demanda</x-import></div>
+      </header>
+    </sc-if>
+    <sc-if value="{{ mBrowser }}" hint-placeholder-val="{{ false }}">
+      <header style="height:56px;flex:0 0 56px;display:flex;align-items:center;gap:8px;padding:0 10px;background:var(--side);color:#fff">
+        <span onClick="{{ openDrawer }}" aria-label="Abrir menu" style="width:44px;height:44px;display:grid;place-items:center;color:var(--side-text);cursor:pointer">{{ i.menu }}</span>
+        <img src="assets/finpec-mark.png" alt="" style="height:22px;width:auto"><span style="font:700 15px/1 var(--font-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ title }}</span>
+        <span onClick="{{ goNova }}" aria-label="Nova demanda" style="margin-left:auto;width:44px;height:44px;display:grid;place-items:center;border-radius:8px;background:var(--primary);color:#fff;cursor:pointer">{{ i.plus }}</span>
+      </header>
+    </sc-if>
+    <sc-if value="{{ pwa }}" hint-placeholder-val="{{ false }}">
+      <header style="height:52px;flex:0 0 52px;display:flex;align-items:center;gap:8px;padding:0 12px 0 16px;background:var(--surface);border-bottom:1px solid var(--border)">
+        <sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}"><span onClick="{{ goBack }}" aria-label="Voltar" style="width:44px;height:44px;margin-left:-12px;display:grid;place-items:center;color:var(--primary);cursor:pointer">{{ i.backL }}</span></sc-if>
+        <span style="font:700 19px/1.1 var(--font-display);letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">{{ title }}</span>
+        <span style="margin-left:auto;display:flex;align-items:center;gap:6px;font:600 11.5px/1 var(--font-ui);color:{{ syncFg }};white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:{{ syncDot }}"></span>{{ syncLabel }}</span>
+        <span onClick="{{ goConta }}" aria-label="Minha conta" style="width:44px;height:44px;display:grid;place-items:center;cursor:pointer"><span style="width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:700 11.5px/1 var(--font-display);color:#fff;background:var(--primary)">{{ user.initials }}</span></span>
+      </header>
+      <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="flex:0 0 auto;display:flex;align-items:flex-start;gap:8px;padding:10px 16px;background:var(--warn-soft);color:var(--warn-ink);font:600 12.5px/1.4 var(--font-ui);border-bottom:1px solid var(--border)"><span style="display:grid;margin-top:1px">{{ i.wifiOff }}</span><span>Sem conexão · exibindo dados salvos às {{ timeStr }}. Ações que gravam ficam indisponíveis.</span></div>
+      </sc-if>
+    </sc-if>
+    <div ref="{{ scrollRef }}" style="flex:1;min-height:0;overflow:auto;overscroll-behavior:contain">
+<sc-if value="{{ is.dashboard }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1320px;margin:0 auto">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Dashboard</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Visão executiva de todas as diretorias</p></div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Select" style="width:220px" hint-size="220px,42px"><option>Todas as diretorias</option><option>Jurídico</option><option>Financeiro</option><option>Tecnologia/TI</option></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" onClick="{{ copiar }}" hint-size="120px,42px">Aplicar filtro</x-import></div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));overflow:hidden">
+    <sc-for list="{{ volume }}" as="v" hint-placeholder-count="5">
+      <div onClick="{{ goKanban }}" style="padding:16px 20px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:-1px;display:flex;flex-direction:column;gap:8px;cursor:pointer" style-hover="background:var(--surface-2)"><span style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">{{ v.label }}</span><span style="font:700 28px/1 var(--font-display);letter-spacing:-0.02em">{{ v.value }}</span><span style="font-size:12.5px;font-weight:600;color:var(--primary)">Ver demandas →</span></div>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+    <sc-for list="{{ dashKpis }}" as="k" hint-placeholder-count="5"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.KpiCard" dc-props="{{ k }}" hint-size="100%,124px"></x-import></sc-for>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px"><div><div style="font:600 15px/1.3 var(--font-ui)">Aguardando terceiros</div><div style="font-size:12.5px;color:var(--muted);margin-top:4px">Tempo sob responsabilidade do demandante · o aging da diretoria fica pausado</div></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="warn" dot="{{ true }}" hint-size="100px,22px">Aging pausado</x-import></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-bottom:1px solid var(--border)">
+      <div style="padding:16px 20px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:6px"><span style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Demandas aguardando</span><span style="font:700 26px/1 var(--font-display)">12</span></div>
+      <div style="padding:16px 20px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:6px"><span style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Aging médio do demandante</span><span style="font:700 26px/1 var(--font-display)">29,8<span style="font-size:14px;color:var(--muted);margin-left:5px">dias</span></span></div>
+      <div style="padding:16px 20px;display:flex;flex-direction:column;gap:6px"><span style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Maior espera atual</span><span style="font:700 26px/1 var(--font-display);color:var(--warn-ink)">37<span style="font-size:14px;color:var(--muted);margin-left:5px">dias</span></span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+      <sc-for list="{{ terceiros }}" as="bc" hint-placeholder-count="2">
+        <div style="padding:14px 20px 12px;border-right:1px solid var(--border)"><div style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);padding-bottom:6px">{{ bc.title }}</div>
+          <sc-for list="{{ bc.rows }}" as="r" hint-placeholder-count="5"><div style="display:grid;grid-template-columns:minmax(0,140px) minmax(0,1fr) 64px;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.label }}</span><div style="height:6px;background:var(--surface-2);border-radius:100px;overflow:hidden"><div style="height:100%;width:{{ r.w }};background:{{ bc.bar }};border-radius:100px"></div></div><span style="text-align:right;font:600 12.5px/1 var(--font-mono)">{{ r.value }}</span></div></sc-for>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+    <sc-for list="{{ distrib }}" as="bc" hint-placeholder-count="3">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)"><div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span style="font:600 15px/1.3 var(--font-ui)">{{ bc.title }}</span><span style="font:600 11.5px/1.3 var(--font-mono);color:var(--muted)">{{ bc.total }}</span></div><div style="padding:6px 20px 12px"><sc-for list="{{ bc.rows }}" as="r" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr) 56px;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.label }}</span><div style="height:6px;background:var(--surface-2);border-radius:100px;overflow:hidden"><div style="height:100%;width:{{ r.w }};background:{{ bc.bar }};border-radius:100px"></div></div><span style="text-align:right;font:600 12.5px/1 var(--font-mono)">{{ r.value }}</span></div></sc-for></div></div>
+    </sc-for>
+    <sc-for list="{{ prazo }}" as="bc" hint-placeholder-count="3">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)"><div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between"><span style="font:600 15px/1.3 var(--font-ui)">{{ bc.title }}</span><span style="font:600 11.5px/1.3 var(--font-mono);color:var(--muted)">{{ bc.total }}</span></div><div style="padding:6px 20px 12px"><sc-for list="{{ bc.rows }}" as="r" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr) 56px;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px"><span style="color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.label }}</span><div style="height:6px;background:var(--surface-2);border-radius:100px;overflow:hidden"><div style="height:100%;width:{{ r.w }};background:{{ bc.bar }};border-radius:100px"></div></div><span style="text-align:right;font:600 12.5px/1 var(--font-mono)">{{ r.value }}</span></div></sc-for></div></div>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;align-items:start">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between"><span style="font:600 15px/1.3 var(--font-ui)">Abertas no vermelho · 21</span><span onClick="{{ goKanban }}" style="font-size:13px;font-weight:600;color:var(--primary);cursor:pointer">Abrir no Kanban →</span></div>
+      <sc-for list="{{ vermelhas }}" as="r" hint-placeholder-count="3"><div onClick="{{ r.open }}" style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-top:1px solid var(--border);font-size:13px;cursor:pointer" style-hover="background:var(--surface-2)"><div style="flex:1;min-width:0"><div style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</div><div style="font-size:12px;color:var(--muted);margin-top:2px">{{ r.etapa }}</div></div><span style="font:600 13px/1 var(--font-mono);color:var(--danger-ink)">{{ r.aging }}</span></div></sc-for>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between"><span style="font:600 15px/1.3 var(--font-ui)">Ranking de execução</span><span onClick="{{ goRanking }}" style="font-size:13px;font-weight:600;color:var(--primary);cursor:pointer">Ver ranking →</span></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-top:1px solid var(--border);font-size:13px"><span style="font:700 15px/1 var(--font-display);width:16px">1</span><div style="flex:1"><div style="font-weight:600">Financeiro</div><div style="font:500 11.5px/1.3 var(--font-mono);color:var(--muted)">0% · 0% verde · 56 dias</div></div><span style="font:700 14px/1 var(--font-mono)">14</span></div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-top:1px solid var(--border);font-size:13px"><span style="font:700 15px/1 var(--font-display);width:16px">2</span><div style="flex:1"><div style="font-weight:600">Jurídico</div><div style="font:500 11.5px/1.3 var(--font-mono);color:var(--muted)">9,5% · 93,3% verde · 23,1 dias · 20 vermelhas</div></div><span style="font:700 14px/1 var(--font-mono)">0</span></div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.bi }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1320px;margin:0 auto">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div><div style="font:700 11px/1 var(--font-ui);letter-spacing:0.13em;text-transform:uppercase;color:var(--primary);margin-bottom:8px">Visão executiva</div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">BI · Evolução das demandas</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Volume, tempo e entregas nas últimas 12 semanas</p></div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Select" style="width:220px" hint-size="220px,42px"><option>Todas as diretorias</option><option>Jurídico</option></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" hint-size="120px,42px">Aplicar filtro</x-import></div>
+  </div>
+  <div style="display:flex;gap:10px;padding:12px 16px;background:var(--warn-soft);border:1px solid var(--border);border-radius:10px;font-size:13px;line-height:1.5;color:var(--warn-ink)"><span style="display:grid;margin-top:1px">{{ i.alert }}</span><span>Parte do histórico está incompleta; pontos anteriores são estimados. Semanas de segunda a domingo, em Brasília; a atual é parcial.</span></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px"><sc-for list="{{ biKpis }}" as="k" hint-placeholder-count="5"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.KpiCard" dc-props="{{ k }}" hint-size="100%,124px"></x-import></sc-for></div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px 14px">
+    <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:200px"><div style="font:600 15px/1.3 var(--font-ui)">Criadas × entregues</div><div style="font-size:12.5px;color:var(--muted);margin-top:4px">12/10 a 18/10 · parcial · Criadas <b style="font-family:var(--font-mono);color:var(--ink)">10</b> · Entregues <b style="font-family:var(--font-mono);color:var(--ink)">6</b></div></div><div style="display:flex;gap:6px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.copy }}" onClick="{{ copiar }}" hint-size="120px,32px">Copiar gráfico</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.download }}" onClick="{{ png }}" hint-size="110px,32px">Baixar PNG</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.expand }}" onClick="{{ expand.ce }}" title="Expandir gráfico" aria-label="Expandir gráfico" hint-size="32px,32px"></x-import></div></div>
+    <div style="margin-top:12px">{{ charts.ce }}</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px 14px"><div style="display:flex;gap:12px"><div style="flex:1"><div style="font:600 15px/1.3 var(--font-ui)">Evolução do aging</div><div style="font-size:12.5px;color:var(--muted);margin-top:4px">Aging médio <b style="font-family:var(--font-mono);color:var(--ink)">23 dias</b></div></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.copy }}" onClick="{{ copiar }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.download }}" onClick="{{ png }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.expand }}" onClick="{{ expand.aging }}" title="Expandir gráfico" aria-label="Expandir gráfico" hint-size="32px,32px"></x-import></div><div style="margin-top:12px">{{ charts.aging }}</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px 14px"><div style="display:flex;gap:12px"><div style="flex:1"><div style="font:600 15px/1.3 var(--font-ui)">Estoque de demandas</div><div style="font-size:12.5px;color:var(--muted);margin-top:4px">Em aberto <b style="font-family:var(--font-mono);color:var(--ink)">42</b></div></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.copy }}" onClick="{{ copiar }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.download }}" onClick="{{ png }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.expand }}" onClick="{{ expand.estoque }}" title="Expandir gráfico" aria-label="Expandir gráfico" hint-size="32px,32px"></x-import></div><div style="margin-top:12px">{{ charts.estoque }}</div></div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px 14px"><div style="display:flex;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:200px"><div style="font:600 15px/1.3 var(--font-ui)">Evolução do percentual entregue</div><div style="font-size:12.5px;color:var(--muted);margin-top:4px">Concluídas <b style="font-family:var(--font-mono);color:var(--ink)">64,5%</b></div></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.copy }}" onClick="{{ copiar }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.download }}" onClick="{{ png }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.expand }}" onClick="{{ expand.pct }}" title="Expandir gráfico" aria-label="Expandir gráfico" hint-size="32px,32px"></x-import></div><div style="margin-top:12px">{{ charts.pct }}</div></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px 14px"><div style="display:flex;gap:12px"><div style="flex:1"><div style="font:600 15px/1.3 var(--font-ui)">Demandas criadas na semana</div><div style="font-size:12.5px;color:var(--muted);margin-top:4px">115 novas nas 12 semanas</div></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.expand }}" onClick="{{ expand.criadas }}" title="Expandir gráfico" aria-label="Expandir gráfico" hint-size="32px,32px"></x-import></div><div style="margin-top:12px">{{ charts.criadas }}</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px 14px"><div style="display:flex;gap:12px"><div style="flex:1"><div style="font:600 15px/1.3 var(--font-ui)">Demandas entregues na semana</div><div style="font-size:12.5px;color:var(--muted);margin-top:4px">72 entregas no período</div></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.expand }}" onClick="{{ expand.entregues }}" title="Expandir gráfico" aria-label="Expandir gráfico" hint-size="32px,32px"></x-import></div><div style="margin-top:12px">{{ charts.entregues }}</div></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.ranking }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1320px;margin:0 auto">
+  <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Ranking de execução</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Diretorias ativas com demandas na base</p></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:16px">
+    <sc-for list="{{ rankTiles }}" as="r" hint-placeholder-count="2">
+      <div style="background:var(--surface);border:1px solid {{ r.bd }};border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <span style="width:48px;height:48px;flex:0 0 48px;border-radius:12px;display:grid;place-items:center;font:800 19px/1 var(--font-display);background:{{ r.posBg }};color:{{ r.posFg }}">{{ r.pos }}</span>
+          <div style="flex:1;min-width:0"><div style="font:700 17px/1.2 var(--font-display)">{{ r.dir }}</div><div style="font-size:12.5px;color:var(--muted);margin-top:3px">Diretor: {{ r.resp }}</div></div>
+          <div style="text-align:right"><div style="font:700 10.5px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Score</div><div style="font:800 28px/1 var(--font-display);letter-spacing:-0.02em;margin-top:5px">{{ r.score }}</div></div>
+        </div>
+        <div style="height:8px;background:var(--primary-soft);border-radius:100px;overflow:hidden"><div style="width:{{ r.w }};height:100%;background:var(--primary);border-radius:100px"></div></div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px 10px;padding-top:14px;border-top:1px solid var(--border)">
+          <sc-for list="{{ r.m }}" as="x" hint-placeholder-count="5"><div style="min-width:0"><div style="font:700 10.5px/1.25 var(--font-ui);letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">{{ x.k }}</div><div style="font:600 15px/1 var(--font-mono);color:{{ x.c }};margin-top:6px">{{ x.v }}</div></div></sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:10px"><span style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Como a pontuação é calculada</span><code style="font:500 13px/1.6 var(--font-mono);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:12px 14px">0,4 × % concluído + 0,3 × % no verde + máx(0; 20 − 0,25 × aging) + máx(0; 10 − 2 × vermelhas) − 8 × P0 vermelhas</code><span style="font-size:12.5px;color:var(--muted)">Resultado mínimo zero.</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.kanban }}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{ web }}" hint-placeholder-val="{{ true }}">
+<div style="height:100%;box-sizing:border-box;padding:22px 28px 16px;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Kanban geral</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">42 abertas · ordenadas por prioridade e posição na fila</p></div>
+    <div style="display:flex;align-items:center;gap:14px;font-size:12.5px;color:var(--muted)"><span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--ok)"></span>Verde</span><span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--warn)"></span>Amarelo</span><span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:var(--danger)"></span>Vermelho</span><sc-if value="{{ canSort }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;gap:6px;color:var(--ink-2);font-weight:600">{{ i.grip }}Ordenação habilitada</span></sc-if></div>
+  </div>
+  <div style="flex:1;min-height:0;display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;padding-bottom:6px">
+    <sc-for list="{{ cols }}" as="col" hint-placeholder-count="7">
+      <sc-if value="{{ col.rail }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ col.toggleCol }}" role="button" aria-expanded="false" aria-label="Expandir {{ col.name }}" title="Expandir etapa" style="flex:0 0 44px;width:44px;background:var(--surface-2);border:1px dashed var(--border-strong);border-radius:14px;display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:10px;box-sizing:border-box;cursor:pointer" style-hover="border-color:var(--primary);background:var(--primary-soft)"><span style="width:28px;height:28px;display:grid;place-items:center;border-radius:7px;color:var(--primary)">{{ i.expandCol }}</span><span style="width:8px;height:8px;border-radius:50%;background:{{ col.dot }}"></span><span style="font:700 11.5px/1 var(--font-mono);color:var(--muted)">{{ col.count }}</span><span style="writing-mode:vertical-rl;font:600 12.5px/1 var(--font-ui);color:var(--muted);white-space:nowrap">{{ col.name }}</span></div>
+      </sc-if>
+      <sc-if value="{{ col.open }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:0 0 296px;width:296px;display:flex;flex-direction:column;min-height:0;background:var(--surface-2);border:1px solid var(--border);border-radius:14px">
+          <div style="display:flex;align-items:center;gap:8px;padding:12px 10px 10px 14px"><span style="width:8px;height:8px;border-radius:50%;background:{{ col.dot }}"></span><span style="font:600 14px/1.2 var(--font-ui)">{{ col.name }}</span><span style="font:700 11.5px/1 var(--font-ui);color:var(--muted);background:var(--neutral-soft);padding:3px 8px;border-radius:100px">{{ col.count }}</span><span onClick="{{ col.toggleSearch }}" title="Buscar nesta etapa" aria-label="Buscar nesta etapa" style="margin-left:auto;width:30px;height:30px;display:grid;place-items:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--surface);color:var(--primary)">{{ i.search }}</span><span onClick="{{ col.toggleCol }}" role="button" aria-expanded="true" title="Recolher etapa" aria-label="Recolher {{ col.name }}" style="width:30px;height:30px;display:grid;place-items:center;border-radius:7px;color:var(--muted);cursor:pointer" style-hover="background:var(--surface);color:var(--primary)">{{ i.collapseCol }}</span></div>
+          <sc-if value="{{ col.searchOpen }}" hint-placeholder-val="{{ false }}"><div style="padding:0 10px 10px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" placeholder="Filtrar por título nesta etapa" auto-focus="{{ true }}" style="height:34px;font-size:13px" hint-size="100%,34px"></x-import></div></sc-if>
+          <sc-if value="{{ col.note }}" hint-placeholder-val="{{ false }}"><div style="padding:0 14px 8px;font-size:11.5px;color:var(--muted)">{{ col.note }}</div></sc-if>
+          <div style="flex:1;min-height:0;overflow-y:auto;padding:0 10px 12px;display:flex;flex-direction:column;gap:10px">
+            <sc-if value="{{ col.empty }}" hint-placeholder-val="{{ false }}"><div style="margin-top:4px;padding:20px 14px;border:1px dashed var(--border-strong);border-radius:10px;text-align:center;font-size:12.5px;line-height:1.45;color:var(--muted)">Nenhuma demanda nesta etapa.</div></sc-if>
+            <sc-for list="{{ col.groups }}" as="g" hint-placeholder-count="1">
+              <div style="display:flex;align-items:center;gap:8px;padding:6px 4px 0;font:600 11.5px/1 var(--font-ui);color:var(--muted)"><span style="font:700 11px/1 var(--font-mono);background:var(--ink);color:var(--surface);padding:3px 6px;border-radius:5px">{{ g.prio }}</span>{{ g.fila }}</div>
+              <sc-for list="{{ g.cards }}" as="c" hint-placeholder-count="3">
+                <div onClick="{{ c.open }}" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:7px;box-shadow:var(--shadow-sm);cursor:pointer" style-hover="border-color:var(--faint);box-shadow:var(--shadow)">
+                  <div style="display:flex;align-items:center;gap:8px;min-height:22px"><sc-if value="{{ c.pos }}" hint-placeholder-val="{{ true }}"><span style="font:600 11.5px/1 var(--font-mono);color:var(--muted)">{{ c.pos }} na fila</span></sc-if><span style="margin-left:auto"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="{{ c.tone }}" dot="{{ true }}" hint-size="70px,22px">{{ c.farol }}</x-import></span></div>
+                  <div style="font:600 13.5px/1.38 var(--font-ui);color:var(--ink);overflow-wrap:anywhere">{{ c.title }}</div>
+                  <div style="font-size:12px;color:var(--muted)">{{ c.dir }} · {{ c.sol }}</div>
+                  <div style="display:flex;align-items:center;gap:6px;padding-top:8px;border-top:1px solid var(--border);font-size:12px;min-height:26px">
+                    <sc-if value="{{ c.plain }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;gap:5px;color:var(--muted)">{{ i.clock }}Aging <b style="font:600 12px/1 var(--font-mono);color:var(--ink-2)">{{ c.aging }}</b></span></sc-if>
+                    <sc-if value="{{ c.paused }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:5px;color:var(--warn-ink);font-weight:600">{{ i.pause }}Pausado</span><span style="color:var(--muted)">· demandante <b style="font-family:var(--font-mono);color:var(--ink-2)">{{ c.demandante }}</b></span></sc-if>
+                    <sc-if value="{{ c.concl }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:5px;color:var(--ok-ink);font-weight:600">{{ i.check }}Concluída em {{ c.concl }}</span></sc-if>
+                    <sc-if value="{{ c.sortable }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;display:flex;gap:2px">
+                      <sc-if value="{{ c.notFirst }}" hint-placeholder-val="{{ true }}"><span onClick="{{ c.up }}" title="Subir na fila" style="width:26px;height:26px;display:grid;place-items:center;border-radius:6px;border:1px solid var(--border-strong);color:var(--primary)" style-hover="background:var(--primary-soft)">{{ i.up }}</span></sc-if>
+                      <sc-if value="{{ c.notLast }}" hint-placeholder-val="{{ true }}"><span onClick="{{ c.down }}" title="Descer na fila" style="width:26px;height:26px;display:grid;place-items:center;border-radius:6px;border:1px solid var(--border-strong);color:var(--primary)" style-hover="background:var(--primary-soft)">{{ i.down }}</span></sc-if>
+                    </span></sc-if>
+                  </div>
+                </div>
+              </sc-for>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+<sc-if value="{{ m }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;min-height:100%">
+  <div style="position:sticky;top:0;z-index:2;padding:12px 14px 10px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;gap:8px;align-items:center">
+      <span onClick="{{ mPrev }}" aria-label="Etapa anterior" style="width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;border:1px solid var(--border-strong);border-radius:7px;color:var(--ink-2);cursor:pointer">{{ i.left }}</span>
+      <div style="flex:1;min-width:0;height:44px;display:flex;align-items:center;gap:8px;padding:0 12px;border:1px solid var(--border-strong);border-radius:7px;font:600 14px/1 var(--font-ui)"><span style="width:8px;height:8px;border-radius:50%;background:{{ mCol.dot }}"></span><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ mCol.name }}</span><span style="margin-left:auto;font:600 12px/1 var(--font-mono);color:var(--muted)">{{ mCol.count }}</span></div>
+      <span onClick="{{ mNext }}" aria-label="Próxima etapa" style="width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;border:1px solid var(--border-strong);border-radius:7px;color:var(--ink-2);cursor:pointer">{{ i.right }}</span>
+    </div>
+    <div ref="{{ chipRowRef }}" style="position:relative;display:flex;gap:6px;overflow-x:auto;margin:0 -14px;padding:0 14px 2px;scroll-padding:0 14px">
+      <sc-for list="{{ cols }}" as="col" hint-placeholder-count="7">
+        <sc-if value="{{ col.chipOn }}" hint-placeholder-val="{{ false }}"><span data-chip-on="1" aria-current="true" style="flex:0 0 auto;padding:8px 11px;border-radius:100px;font:600 12px/1 var(--font-ui);color:var(--primary-ink);background:var(--primary-soft);border:1px solid var(--primary);white-space:nowrap">{{ col.name }} {{ col.count }}</span></sc-if>
+        <sc-if value="{{ col.chipOff }}" hint-placeholder-val="{{ true }}"><span onClick="{{ col.pick }}" style="flex:0 0 auto;padding:8px 11px;border-radius:100px;font:600 12px/1 var(--font-ui);color:var(--muted);border:1px solid var(--border);white-space:nowrap;cursor:pointer">{{ col.name }} {{ col.count }}</span></sc-if>
+      </sc-for>
+    </div>
+  </div>
+  <div style="padding:12px 14px 32px;display:flex;flex-direction:column;gap:10px">
+    <sc-if value="{{ mCol.empty }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.EmptyState" title="Sem demandas nesta etapa" message="Use as setas para ver as outras etapas." hint-size="100%,200px"></x-import></sc-if>
+    <sc-for list="{{ mCol.groups }}" as="g" hint-placeholder-count="1">
+      <div style="display:flex;align-items:center;gap:8px;font:600 11.5px/1 var(--font-ui);color:var(--muted)"><span style="font:700 11px/1 var(--font-mono);background:var(--ink);color:var(--surface);padding:3px 6px;border-radius:5px">{{ g.prio }}</span>{{ g.fila }}</div>
+      <sc-for list="{{ g.cards }}" as="c" hint-placeholder-count="3">
+        <div onClick="{{ c.open }}" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;box-shadow:var(--shadow-sm);cursor:pointer">
+          <div style="display:flex;align-items:center;gap:8px"><sc-if value="{{ c.pos }}" hint-placeholder-val="{{ true }}"><span style="font:600 11.5px/1 var(--font-mono);color:var(--muted)">{{ c.pos }} na fila</span></sc-if><span style="margin-left:auto"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="{{ c.tone }}" dot="{{ true }}" hint-size="70px,22px">{{ c.farol }}</x-import></span></div>
+          <div style="font:600 14px/1.38 var(--font-ui);overflow-wrap:anywhere">{{ c.title }}</div>
+          <div style="display:flex;align-items:center;font-size:12.5px;color:var(--muted);gap:8px"><span>{{ c.dir }} · {{ c.sol }}</span><span style="margin-left:auto;font:600 12px/1 var(--font-mono);color:var(--ink-2)">{{ c.aging }}</span></div>
+        </div>
+      </sc-for>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.minhas }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1320px;margin:0 auto">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Minhas demandas</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Criadas por você e atribuídas à sua execução</p></div>
+    <div style="display:flex;padding:3px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;font:600 13px/1 var(--font-ui)">
+      <sc-if value="{{ lista }}" hint-placeholder-val="{{ true }}"><span onClick="{{ setQuadro }}" style="padding:8px 14px;border-radius:7px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer">{{ i.kanban }}Quadro</span><span style="padding:8px 14px;border-radius:7px;background:var(--surface);box-shadow:var(--shadow-sm);display:flex;gap:6px;align-items:center">{{ i.sheet }}Lista</span></sc-if>
+      <sc-if value="{{ quadro }}" hint-placeholder-val="{{ false }}"><span style="padding:8px 14px;border-radius:7px;background:var(--surface);box-shadow:var(--shadow-sm);display:flex;gap:6px;align-items:center">{{ i.kanban }}Quadro</span><span onClick="{{ setLista }}" style="padding:8px 14px;border-radius:7px;color:var(--muted);display:flex;gap:6px;align-items:center;cursor:pointer">{{ i.sheet }}Lista</span></sc-if>
+    </div>
+  </div>
+  <sc-if value="{{ lista }}" hint-placeholder-val="{{ true }}">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden">
+      <sc-for list="{{ minhas }}" as="x" hint-placeholder-count="4">
+        <div onClick="{{ x.open }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:14px 20px;border-top:1px solid var(--border);font-size:13px;cursor:pointer" style-hover="background:var(--surface-2)">
+          <div style="flex:1 1 260px;min-width:0"><div style="font-weight:600;font-size:14px">{{ x.title }}</div><div style="color:var(--muted);font-size:12px;margin-top:3px">{{ x.dir }} · responsável {{ x.resp }}</div></div>
+          <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Tag" hint-size="80px,22px">{{ x.papel }}</x-import>
+          <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="{{ x.etapaTone }}" hint-size="120px,22px">{{ x.etapa }}</x-import>
+          <span style="font:700 12px/1 var(--font-mono)">{{ x.prio }}</span>
+          <span style="display:flex;align-items:center;gap:8px"><span style="font:600 12.5px/1 var(--font-mono)">{{ x.aging }}</span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="{{ x.tone }}" dot="{{ true }}" hint-size="60px,22px">{{ x.farol }}</x-import></span>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+  <sc-if value="{{ quadro }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:6px">
+      <div style="flex:0 0 296px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:12px 10px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:center;gap:8px;padding:0 4px"><span style="width:8px;height:8px;border-radius:50%;background:var(--info)"></span><span style="font:600 14px/1.2 var(--font-ui)">Aprovada / Pendente</span><span style="font:700 11.5px/1 var(--font-ui);color:var(--muted);background:var(--neutral-soft);padding:3px 8px;border-radius:100px">3</span></div>
+        <sc-for list="{{ minhas }}" as="x" hint-placeholder-count="3"><div onClick="{{ x.open }}" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:6px;cursor:pointer"><div style="display:flex;align-items:center"><span style="font-size:12px;color:var(--muted)">{{ x.etapa }}</span><span style="margin-left:auto"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="{{ x.tone }}" dot="{{ true }}" hint-size="60px,22px">{{ x.farol }}</x-import></span></div><div style="font:600 13.5px/1.35 var(--font-ui)">{{ x.title }}</div><div style="font-size:12px;color:var(--muted)">{{ x.dir }} · {{ x.aging }}</div></div></sc-for>
+      </div>
+    </div>
+  </sc-if>
+  <p style="margin:0;font-size:12.5px;color:var(--muted)">Concluídas saem desta lista após 7 dias; consulte o <span onClick="{{ goArquivo }}" style="color:var(--primary);font-weight:600;cursor:pointer">Arquivo</span>.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.arquivo }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1320px;margin:0 auto">
+  <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Arquivo de concluídas</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Demandas concluídas, com comentários e histórico</p></div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden">
+    <sc-for list="{{ arquivo }}" as="a" hint-placeholder-count="9">
+      <div onClick="{{ a.open }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:12px 20px;border-top:1px solid var(--border);font-size:13px;cursor:pointer" style-hover="background:var(--surface-2)">
+        <span style="flex:1 1 320px;min-width:0;font-weight:600">{{ a.title }}</span>
+        <span style="color:var(--ink-2);flex:0 0 130px">{{ a.sol }}</span><span style="font:700 12px/1 var(--font-mono)">P0</span><span style="font-family:var(--font-mono);color:var(--muted)">{{ a.res }}</span><span style="font-family:var(--font-mono);flex:0 0 90px;text-align:right">{{ a.concl }}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.nova }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:900px;margin:0 auto">
+  <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Nova demanda</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Toda demanda é enviada primeiro para aprovação do CEO.</p></div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:24px;display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 12.5px/1.3 var(--font-ui);color:var(--ink-2)">Diretoria solicitada <span style="color:var(--accent)">*</span></span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px"><sc-for list="{{ dirs }}" as="d" hint-placeholder-count="4"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.RadioCard" title="{{ d.name }}" desc="{{ d.desc }}" selected="{{ d.sel }}" on-select="{{ d.pick }}" hint-size="100%,62px"></x-import></sc-for></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px"><span style="font:600 12.5px/1.3 var(--font-ui);color:var(--ink-2)">Título da demanda <span style="color:var(--accent)">*</span></span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" value="{{ S.titulo }}" on-change="{{ setTitulo }}" placeholder="Ex.: Revisão de contrato de comodato | Fazenda Barreiro" hint-size="100%,42px"></x-import><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--faint)"><span>Mínimo de 3 caracteres</span><span style="font-family:var(--font-mono)">{{ tLen }}</span></div></div>
+    <div style="display:flex;flex-direction:column;gap:7px"><span style="font:600 12.5px/1.3 var(--font-ui);color:var(--ink-2)">Descrição / motivo da demanda <span style="color:var(--accent)">*</span></span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" as="textarea" rows="4" value="{{ S.desc }}" on-change="{{ setDesc }}" hint-size="100%,110px"></x-import><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--faint)"><span>Mínimo de 10 caracteres</span><span style="font-family:var(--font-mono)">{{ dLen }}</span></div></div>
+    <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Comentários complementares" hint="Opcional" hint-size="100%,120px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" as="textarea" rows="3" hint-size="100%,92px"></x-import></x-import>
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;font-size:12.5px;color:var(--muted)"><span style="display:grid;color:var(--faint)">{{ i.info }}</span>O envio de anexos ainda não está disponível.</div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--border);padding-top:16px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="ghost" onClick="{{ goKanban }}" hint-size="90px,40px">Cancelar</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" disabled="{{ formBad }}" onClick="{{ criar }}" hint-size="150px,40px">Criar demanda</x-import></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.detalhe }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1320px;margin:0 auto">
+  <span onClick="{{ goBack }}" style="display:flex;align-items:center;gap:4px;font:600 13px/1 var(--font-ui);color:var(--primary);cursor:pointer;align-self:flex-start">{{ i.left }}Voltar</span>
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:10px;min-width:0;flex:1 1 400px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="info" dot="{{ true }}" hint-size="110px,22px">{{ etapa }}</x-import><span style="font:700 11px/1 var(--font-mono);background:var(--ink);color:var(--surface);padding:4px 7px;border-radius:5px">P0</span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="{{ sel.tone }}" dot="{{ true }}" hint-size="120px,22px">{{ sel.farol }} · {{ sel.aging }}</x-import></div>
+      <h2 style="margin:0;font:700 24px/1.25 var(--font-display);letter-spacing:-0.01em;overflow-wrap:anywhere">{{ sel.title }}</h2>
+      <p style="margin:0;font-size:14px;color:var(--muted)">{{ sel.dir }} · solicitada por {{ sel.sol }}</p>
+    </div>
+    <sc-if value="{{ notEditing }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" icon="{{ i.edit }}" onClick="{{ startEdit }}" hint-size="150px,40px">Editar demanda</x-import></sc-if>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;flex-direction:column;gap:18px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><span style="font:600 15px/1.3 var(--font-ui)">Etapas da demanda</span><span style="font:600 12px/1 var(--font-ui);color:var(--primary-ink);border:1px solid var(--primary);padding:5px 10px;border-radius:100px">{{ etapa }}</span></div>
+    <sc-if value="{{ web }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:flex-start">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <div style="flex:1 1 0;min-width:0;position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:0 4px">
+            <sc-if value="{{ s.line }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:13px;left:50%;width:100%;height:2px;background:{{ s.lineColor }}"></span></sc-if>
+            <sc-if value="{{ s.lineDash }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:13px;left:50%;width:100%;border-top:2px dashed var(--border-strong)"></span></sc-if>
+            <div style="height:28px;display:grid;place-items:center;position:relative;z-index:1">
+              <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center">{{ i.checkW }}</span></sc-if>
+              <sc-if value="{{ s.cur }}" hint-placeholder-val="{{ false }}"><span style="width:28px;height:28px;box-sizing:border-box;border-radius:50%;background:var(--surface);border:2.5px solid var(--primary);color:var(--primary);display:grid;place-items:center;font:700 12px/1 var(--font-mono);box-shadow:0 0 0 4px var(--primary-soft)">{{ s.n }}</span></sc-if>
+              <sc-if value="{{ s.todo }}" hint-placeholder-val="{{ true }}"><span style="width:22px;height:22px;box-sizing:border-box;border-radius:50%;background:var(--surface);border:1.5px solid var(--border-strong);color:var(--muted);display:grid;place-items:center;font:600 11px/1 var(--font-mono)">{{ s.n }}</span></sc-if>
+              <sc-if value="{{ s.term }}" hint-placeholder-val="{{ false }}"><span style="width:22px;height:22px;box-sizing:border-box;border-radius:50%;background:var(--surface);border:1.5px solid var(--border-strong);color:var(--muted);display:grid;place-items:center;font:600 12px/1 var(--font-mono)">×</span></sc-if>
+            </div>
+            <sc-if value="{{ s.cur }}" hint-placeholder-val="{{ false }}"><span style="font:700 12.5px/1.3 var(--font-ui);color:var(--primary-ink)">{{ s.label }}</span></sc-if>
+            <sc-if value="{{ s.notCur }}" hint-placeholder-val="{{ true }}"><span style="font:500 12.5px/1.3 var(--font-ui);color:var(--ink-2)">{{ s.label }}</span></sc-if>
+            <span style="font:500 11px/1.35 var(--font-mono);color:var(--muted)">{{ s.meta }}</span>
+            <span style="font:500 11px/1.2 var(--font-ui);color:var(--muted)">{{ s.who }}</span>
+            <sc-if value="{{ s.note }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:4px;font:600 11px/1.2 var(--font-ui);color:var(--warn-ink)">{{ i.pause }}{{ s.note }}</span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ m }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:28px 1fr;gap:12px;position:relative;padding-bottom:14px">
+            <sc-if value="{{ s.line }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;left:13px;top:28px;bottom:0;width:2px;background:{{ s.lineColor }}"></span></sc-if>
+            <sc-if value="{{ s.lineDash }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;left:13px;top:28px;bottom:0;border-left:2px dashed var(--border-strong)"></span></sc-if>
+            <div style="display:grid;place-items:center;height:28px;position:relative;z-index:1">
+              <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}"><span style="width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center">{{ i.checkW }}</span></sc-if>
+              <sc-if value="{{ s.cur }}" hint-placeholder-val="{{ false }}"><span style="width:28px;height:28px;box-sizing:border-box;border-radius:50%;background:var(--surface);border:2.5px solid var(--primary);color:var(--primary);display:grid;place-items:center;font:700 12px/1 var(--font-mono)">{{ s.n }}</span></sc-if>
+              <sc-if value="{{ s.todo }}" hint-placeholder-val="{{ true }}"><span style="width:22px;height:22px;box-sizing:border-box;border-radius:50%;background:var(--surface);border:1.5px solid var(--border-strong);color:var(--muted);display:grid;place-items:center;font:600 11px/1 var(--font-mono)">{{ s.n }}</span></sc-if>
+              <sc-if value="{{ s.term }}" hint-placeholder-val="{{ false }}"><span style="width:22px;height:22px;box-sizing:border-box;border-radius:50%;background:var(--surface);border:1.5px solid var(--border-strong);color:var(--muted);display:grid;place-items:center;font:600 12px/1 var(--font-mono)">×</span></sc-if>
+            </div>
+            <div style="padding-top:4px"><sc-if value="{{ s.cur }}" hint-placeholder-val="{{ false }}"><div style="font:700 13.5px/1.3 var(--font-ui);color:var(--primary-ink)">{{ s.label }}</div></sc-if><sc-if value="{{ s.notCur }}" hint-placeholder-val="{{ true }}"><div style="font:500 13.5px/1.3 var(--font-ui);color:var(--ink-2)">{{ s.label }}</div></sc-if><div style="font:500 11.5px/1.4 var(--font-mono);color:var(--muted)">{{ s.meta }} {{ s.who }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--border)">
+      <span style="font-size:12px;color:var(--muted);flex:1 1 240px">Aguardando terceiros exige o motivo (mín. 5 caracteres) e pausa o aging da diretoria.</span>
+      <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <sc-if value="{{ isAprov }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" onClick="{{ start }}" hint-size="150px,40px">Iniciar execução</x-import></sc-if>
+        <sc-if value="{{ isAnd }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" icon="{{ i.pause }}" onClick="{{ askData }}" hint-size="200px,40px">Solicitar dados ao demandante</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" icon="{{ i.check }}" onClick="{{ finish }}" hint-size="160px,40px">Finalizar entrega</x-import></sc-if>
+        <sc-if value="{{ isTerc }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" onClick="{{ resume }}" hint-size="160px,40px">Retomar execução</x-import></sc-if>
+        <sc-if value="{{ isCEO }}" hint-placeholder-val="{{ true }}"><span onClick="{{ cancelDem }}" style="font:600 13.5px/1 var(--font-ui);color:var(--danger);padding:10px 8px;cursor:pointer">Cancelar demanda</span></sc-if>
+      </span>
+    </div>
+    <sc-if value="{{ ask }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;padding:14px;background:var(--warn-soft);border-radius:10px"><div style="flex:1 1 260px;display:flex;flex-direction:column;gap:6px"><span style="font:600 12.5px/1.3 var(--font-ui);color:var(--warn-ink)">O que falta? (mín. 5 caracteres)</span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" default-value="Enviar matrícula atualizada do imóvel." hint-size="100%,42px"></x-import></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" onClick="{{ confirmAsk }}" hint-size="170px,42px">Enviar ao demandante</x-import></div>
+    </sc-if>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+    <div style="flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:16px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+        <div style="padding:14px 18px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)"><div style="font:700 10.5px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Responsável</div><div style="font:600 14px/1.3 var(--font-ui);margin-top:7px">Vagner Araújo</div></div>
+        <div style="padding:14px 18px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)"><div style="font:700 10.5px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Aging da diretoria</div><div style="font:600 14px/1.3 var(--font-mono);margin-top:7px">{{ sel.aging }}</div></div>
+        <div style="padding:14px 18px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)"><div style="font:700 10.5px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Criada em</div><div style="font:600 14px/1.3 var(--font-mono);margin-top:7px">10/09/2026</div></div>
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border)"><div style="font:700 10.5px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Aprovada em</div><div style="font:600 14px/1.3 var(--font-mono);margin-top:7px">18/09/2026</div></div>
+      </div>
+      <sc-if value="{{ notEditing }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:20px;display:flex;flex-direction:column;gap:14px"><div><div style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Descrição / motivo</div><p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink-2)">Diligência na filial para validação documental do produtor antes da formalização da operação.</p></div><div><div style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Comentários complementares</div><p style="margin:0;font-size:14px;color:var(--faint)">Nenhum comentário complementar.</p></div></div>
+      </sc-if>
+      <sc-if value="{{ editing }}" hint-placeholder-val="{{ false }}">
+        <div style="background:var(--surface);border:1px solid var(--primary);border-radius:14px;box-shadow:var(--focus-ring),var(--shadow-sm)">
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);font:600 15px/1.3 var(--font-ui)">Editar demanda</div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:16px">
+            <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Título da demanda" required="{{ true }}" hint="Mínimo de 3 caracteres" hint-size="100%,80px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" default-value="{{ sel.title }}" hint-size="100%,42px"></x-import></x-import>
+            <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Descrição / motivo" required="{{ true }}" hint="Mínimo de 10 caracteres" hint-size="100%,140px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" as="textarea" rows="3" default-value="Diligência na filial para validação documental do produtor antes da formalização da operação." hint-size="100%,92px"></x-import></x-import>
+            <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Diretoria solicitada" hint="A troca remove atribuições incompatíveis." hint-size="100%,90px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Select" hint-size="100%,42px"><option>Jurídico</option><option>Financeiro</option></x-import></x-import>
+          </div>
+          <div style="padding:14px 20px;border-top:1px solid var(--border);background:var(--surface-2);border-radius:0 0 14px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:12.5px;color:var(--muted);flex:1 1 220px">Ao salvar, um comentário de auditoria registra autor, horário e campos alterados.</span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="ghost" onClick="{{ cancelEdit }}" hint-size="90px,40px">Cancelar</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" onClick="{{ saveEdit }}" hint-size="150px,40px">Salvar alterações</x-import></div>
+        </div>
+      </sc-if>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)">
+        <div style="padding:16px 20px;border-bottom:1px solid var(--border);font:600 15px/1.3 var(--font-ui)">Comentários</div>
+        <div style="padding:4px 20px">
+          <sc-for list="{{ comments }}" as="cm" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)"><span style="width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:700 11px/1 var(--font-display);color:var(--primary-ink);background:var(--primary-soft)">{{ cm.ini }}</span><div style="display:flex;flex-direction:column;gap:6px;min-width:0"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><b style="font-size:13.5px">{{ cm.who }}</b><span style="font:500 12px/1 var(--font-mono);color:var(--faint)">{{ cm.when }}</span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="{{ cm.tone }}" hint-size="150px,22px">{{ cm.kind }}</x-import></div><p style="margin:0;font-size:13.5px;line-height:1.55;color:var(--ink-2)">{{ cm.text }}</p></div></div>
+          </sc-for>
+        </div>
+        <div style="padding:14px 20px 18px;display:flex;gap:10px;align-items:flex-end"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" as="textarea" rows="2" placeholder="Adicionar comentário" value="{{ S.comment }}" on-change="{{ setComment }}" style="min-height:64px" hint-size="100%,64px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" icon="{{ i.send }}" disabled="{{ noComment }}" onClick="{{ sendComment }}" hint-size="100px,40px">Enviar</x-import></div>
+      </div>
+    </div>
+    <aside style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:16px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:center;gap:8px"><span style="display:grid;color:var(--primary)">{{ i.users }}</span><span style="font:600 15px/1.3 var(--font-ui)">Delegação</span></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Select" hint-size="100%,42px"><option>Vagner Araújo (diretor responsável)</option><option>Almir Paschoal</option></x-import><div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" onClick="{{ delegar }}" hint-size="80px,32px">Delegar</x-import></div><span style="font-size:12px;color:var(--muted)">Só colaboradores ativos da diretoria, com e-mail.</span></div>
+      <sc-if value="{{ isCEO }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="font:600 15px/1.3 var(--font-ui)">Integração com FES</span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="neutral" hint-size="110px,22px">Não sincronizada</x-import></div><span style="font-size:13px;color:var(--ink-2);line-height:1.5">Envia título, descrição, prioridade e prazo original ao FES Institucional.</span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" block="{{ true }}" icon="{{ i.ext }}" disabled="{{ notAnd }}" onClick="{{ fes }}" hint-size="100%,40px">Autorizar envio ao FES</x-import></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;flex-direction:column;gap:12px"><span style="font:600 15px/1.3 var(--font-ui)">Controles do CEO</span><div style="display:flex;gap:8px;align-items:center"><div style="display:flex;padding:3px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;font:700 12.5px/1 var(--font-mono)"><span style="padding:7px 14px;border-radius:6px;background:var(--primary);color:#fff">P0</span><span style="padding:7px 14px;color:var(--muted)">P1</span><span style="padding:7px 14px;color:var(--muted)">P2</span></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" disabled="{{ true }}" hint-size="80px,32px">Alterar</x-import></div><div style="padding:12px 14px;border:1px solid var(--danger-soft);background:var(--danger-soft);border-radius:10px;display:flex;flex-direction:column;gap:8px"><span style="font:600 13px/1.3 var(--font-ui);color:var(--danger-ink)">Excluir demanda</span><span style="font-size:12px;color:var(--ink-2)">Digite <b style="font-family:var(--font-mono)">EXCLUIR DEMANDA</b> para liberar.</span><div style="display:flex;gap:8px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" placeholder="EXCLUIR DEMANDA" style="height:34px;font-family:var(--font-mono);font-size:12.5px" hint-size="100%,34px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="danger" size="sm" disabled="{{ true }}" hint-size="80px,34px">Excluir</x-import></div></div></div>
+      </sc-if>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);padding:18px 20px"><span style="font:600 15px/1.3 var(--font-ui)">Histórico</span><div style="margin-top:14px"><sc-for list="{{ history }}" as="hs" hint-placeholder-count="6"><div style="display:grid;grid-template-columns:16px 1fr;gap:12px;padding-bottom:14px"><span style="width:10px;height:10px;border-radius:50%;background:{{ hs.dot }};margin-top:4px"></span><div><div style="font:600 13px/1.3 var(--font-ui)">{{ hs.st }}</div><div style="font-size:12px;color:var(--muted);margin-top:3px">{{ hs.who }} · <span style="font-family:var(--font-mono)">{{ hs.when }}</span></div></div></div></sc-for></div></div>
+    </aside>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.aprovacao }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1320px;margin:0 auto">
+  <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Aprovação CEO</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Aprovar exige prioridade; recusar ou cancelar exige justificativa</p></div>
+  <sc-if value="{{ noFila }}" hint-placeholder-val="{{ false }}"><div style="background:var(--surface);border:1px solid var(--border);border-radius:14px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.EmptyState" icon="{{ i.checkC }}" title="Nenhuma demanda aguardando aprovação" message="Novas solicitações aparecem aqui e no badge do menu." hint-size="100%,240px"></x-import></div></sc-if>
+  <sc-if value="{{ hasFila }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+    <div style="flex:1 1 320px;max-width:420px;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden">
+      <sc-for list="{{ fila }}" as="f" hint-placeholder-count="3">
+        <sc-if value="{{ f.isSel }}" hint-placeholder-val="{{ false }}"><div style="padding:16px 18px;border-bottom:1px solid var(--border);background:var(--primary-soft);box-shadow:inset 3px 0 0 var(--primary)"><div style="font:600 14px/1.35 var(--font-ui)">{{ f.title }}</div><div style="display:flex;gap:8px;margin-top:6px;font-size:12px;color:var(--muted)"><span>{{ f.dir }} · {{ f.sol }}</span><span style="margin-left:auto;font-family:var(--font-mono)">{{ f.when }}</span></div></div></sc-if>
+        <sc-if value="{{ f.notSel }}" hint-placeholder-val="{{ true }}"><div onClick="{{ f.pick }}" style="padding:16px 18px;border-bottom:1px solid var(--border);cursor:pointer" style-hover="background:var(--surface-2)"><div style="font:600 14px/1.35 var(--font-ui)">{{ f.title }}</div><div style="display:flex;gap:8px;margin-top:6px;font-size:12px;color:var(--muted)"><span>{{ f.dir }} · {{ f.sol }}</span><span style="margin-left:auto;font-family:var(--font-mono)">{{ f.when }}</span></div></div></sc-if>
+      </sc-for>
+    </div>
+    <div style="flex:2 1 480px;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)">
+      <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
+        <span style="font:600 12px/1 var(--font-ui);color:var(--primary-ink);border:1px solid var(--primary);padding:5px 10px;border-radius:100px;align-self:flex-start">Etapa 1 de 4 · Aguardando aprovação CEO</span>
+        <h3 style="margin:0;font:700 20px/1.25 var(--font-display)">{{ aprovItem.title }}</h3>
+        <span style="font-size:13px;color:var(--muted)">Solicitada por {{ aprovItem.sol }} · {{ aprovItem.when }} · proposta: {{ aprovItem.dir }}</span>
+      </div>
+      <div style="padding:20px 24px;display:flex;flex-direction:column;gap:18px">
+        <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Diretoria de destino" hint="Pode ser ajustada na aprovação" hint-size="100%,90px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Select" style="max-width:320px" hint-size="320px,42px"><option>Jurídico</option><option>Financeiro</option><option>Mercado</option><option>Operações</option></x-import></x-import>
+        <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 12.5px/1.3 var(--font-ui);color:var(--ink-2)">Prioridade <span style="color:var(--accent)">*</span></span><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px"><sc-for list="{{ prioCards }}" as="p" hint-placeholder-count="3"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.RadioCard" title="{{ p.p }}" desc="{{ p.desc }}" selected="{{ p.sel }}" on-select="{{ p.pick }}" hint-size="100%,70px"></x-import></sc-for></div></div>
+        <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Justificativa" hint="Obrigatória para recusar ou cancelar · mínimo de 5 caracteres" hint-size="100%,110px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" as="textarea" rows="2" hint-size="100%,72px"></x-import></x-import>
+      </div>
+      <div style="padding:14px 24px;border-top:1px solid var(--border);background:var(--surface-2);border-radius:0 0 14px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="ghost" onClick="{{ recusar }}" hint-size="90px,40px">Cancelar</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" onClick="{{ recusar }}" hint-size="90px,40px">Recusar</x-import><span style="margin-left:auto"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" icon="{{ i.check }}" onClick="{{ aprovar }}" hint-size="150px,40px">Aprovar como {{ S.prio }}</x-import></span></div>
+    </div>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.planilha }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1180px;margin:0 auto">
+  <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Planilha para priorização</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Exportar não altera nenhuma demanda.</p></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:16px;align-items:start">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)"><div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px"><span style="width:24px;height:24px;border-radius:50%;background:var(--primary-soft);color:var(--primary-ink);display:grid;place-items:center;font:700 11.5px/1 var(--font-mono)">1</span><span style="font:600 15px/1.3 var(--font-ui)">Gerar planilha</span></div><div style="padding:20px;display:flex;flex-direction:column;gap:16px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Diretoria" required="{{ true }}" hint-size="100%,70px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Select" hint-size="100%,42px"><option>Jurídico</option><option>Financeiro</option></x-import></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Demandas criadas a partir de" hint="Opcional" hint-size="100%,90px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" type="date" style="max-width:220px" hint-size="220px,42px"></x-import></x-import><div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" icon="{{ i.download }}" onClick="{{ baixar }}" hint-size="220px,40px">Baixar planilha para Excel</x-import></div></div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)"><div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px"><span style="width:24px;height:24px;border-radius:50%;background:var(--primary-soft);color:var(--primary-ink);display:grid;place-items:center;font:700 11.5px/1 var(--font-mono)">2</span><span style="font:600 15px/1.3 var(--font-ui)">Registrar devolução jurídica</span></div><div style="padding:20px;display:flex;flex-direction:column;gap:16px">
+      <div onClick="{{ pickFile }}" style="border:1.5px dashed var(--border-strong);border-radius:12px;background:var(--surface-2);padding:26px 20px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;cursor:pointer" style-hover="border-color:var(--primary);background:var(--primary-soft)"><span style="color:var(--primary);display:grid">{{ i.upload }}</span><sc-if value="{{ noFile }}" hint-placeholder-val="{{ true }}"><span style="font:600 14px/1.3 var(--font-ui)">Solte a planilha preenchida aqui</span><span style="font-size:12.5px;color:var(--muted)">ou clique para escolher · .xlsx gerado pelo FOD</span></sc-if><sc-if value="{{ hasFile }}" hint-placeholder-val="{{ false }}"><span style="font:600 14px/1.3 var(--font-mono)">{{ S.file }}</span><span style="font-size:12.5px;color:var(--ok-ink)">Pronto para registrar</span></sc-if></div>
+      <ul style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.6;color:var(--muted)"><li>Rodada gerada pelo FOD, mesma diretoria, sem duplicidades.</li><li>Não altera status nem prioridade oficial.</li></ul>
+      <div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" disabled="{{ noFile }}" onClick="{{ registrar }}" hint-size="170px,40px">Registrar devolução</x-import></div>
+    </div></div>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.conta }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:820px;margin:0 auto">
+  <div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Minha conta</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Atualize seu nome ou altere sua senha</p></div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)"><div style="padding:16px 20px;border-bottom:1px solid var(--border);font:600 15px/1.3 var(--font-ui)">Identificação</div><div style="padding:20px;display:flex;flex-direction:column;gap:16px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Nome" required="{{ true }}" hint-size="100%,70px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" default-value="{{ user.name }}" hint-size="100%,42px"></x-import></x-import><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;padding:14px 16px;background:var(--surface-2);border-radius:10px"><div><div style="font:700 10.5px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Perfil</div><div style="font-size:13.5px;margin-top:7px">{{ user.role }}</div></div><div><div style="font:700 10.5px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">E-mail</div><div style="font-size:13.5px;margin-top:7px;overflow-wrap:anywhere">nome@finpec.com</div></div></div><span style="font-size:12px;color:var(--muted)">E-mail, perfil e diretoria são mantidos pela administração.</span></div></div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm)"><div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span style="font:600 15px/1.3 var(--font-ui)">Alterar senha</span><span style="font-size:12.5px;color:var(--muted)">Opcional · vazio mantém a atual</span></div><div style="padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Nova senha" hint="Mínimo de 8 caracteres" hint-size="100%,90px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" type="password" hint-size="100%,42px"></x-import></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Confirmar nova senha" hint-size="100%,70px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" type="password" hint-size="100%,42px"></x-import></x-import></div></div>
+  <div style="display:flex;justify-content:flex-end"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" onClick="{{ salvarConta }}" hint-size="100px,40px">Salvar</x-import></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.admin }}" hint-placeholder-val="{{ false }}">
+<div style="padding:{{ pad }};display:flex;flex-direction:column;gap:16px;max-width:1320px;margin:0 auto">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap"><div><h2 style="margin:0;font:700 27px/1.1 var(--font-display);letter-spacing:-0.01em">Usuários e diretorias</h2><p style="margin:6px 0 0;font-size:14px;color:var(--muted)">Contas, diretorias e permissões operacionais</p></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" icon="{{ i.plus }}" onClick="{{ novoUsuario }}" hint-size="140px,40px">Novo usuário</x-import></div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-sm);overflow:hidden">
+    <sc-for list="{{ adminUsers }}" as="u" hint-placeholder-count="9">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 20px;border-top:1px solid var(--border);font-size:13px" style-hover="background:var(--surface-2)">
+        <div style="display:flex;align-items:center;gap:10px;flex:1 1 260px;min-width:0"><span style="width:32px;height:32px;flex:0 0 32px;border-radius:50%;display:grid;place-items:center;font:700 11px/1 var(--font-display);color:var(--primary-ink);background:var(--primary-soft)">{{ u.initials }}</span><div style="min-width:0"><div style="font-weight:600">{{ u.name }}</div><div style="font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis">{{ u.email }}</div></div></div>
+        <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Pill" tone="{{ u.ptone }}" hint-size="80px,22px">{{ u.perfil }}</x-import>
+        <span style="color:var(--ink-2);flex:0 0 90px">{{ u.dir }}</span>
+        <span style="display:flex;gap:6px;font:600 11px/1 var(--font-ui)"><sc-if value="{{ u.pl.on }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 7px;border-radius:100px;background:var(--primary-soft);color:var(--primary-ink)">Planilha</span></sc-if><sc-if value="{{ u.dv.on }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 7px;border-radius:100px;background:var(--primary-soft);color:var(--primary-ink)">Devolução</span></sc-if><sc-if value="{{ u.od.on }}" hint-placeholder-val="{{ false }}"><span style="padding:4px 7px;border-radius:100px;background:var(--primary-soft);color:var(--primary-ink)">Ordenação</span></sc-if></span>
+        <span style="margin-left:auto"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="ghost" size="sm" onClick="{{ u.edit }}" hint-size="60px,32px">Editar</x-import></span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+<sc-if value="{{ panelOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closePanel }}" style="position:absolute;inset:0;background:rgba(24,22,18,.42);z-index:30"></div>
+  <aside style="position:absolute;top:0;right:0;bottom:0;width:min(480px,100%);background:var(--surface);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;z-index:31">
+    <div style="padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px"><div style="flex:1"><sc-if value="{{ panelNew }}" hint-placeholder-val="{{ false }}"><div style="font:700 19px/1.2 var(--font-display)">Novo usuário</div></sc-if><sc-if value="{{ adminSel }}" hint-placeholder-val="{{ true }}"><div style="font:700 19px/1.2 var(--font-display)">Editar usuário</div><div style="font-size:13px;color:var(--muted);margin-top:4px">{{ panelEmail }}</div></sc-if></div><span onClick="{{ closePanel }}" style="width:40px;height:40px;display:grid;place-items:center;border-radius:7px;color:var(--muted);cursor:pointer">{{ i.x }}</span></div>
+    <div style="flex:1;min-height:0;overflow:auto;padding:20px 22px;display:flex;flex-direction:column;gap:16px">
+      <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Nome" required="{{ true }}" hint-size="100%,70px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" default-value="{{ panelName }}" hint-size="100%,42px"></x-import></x-import>
+      <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="E-mail" required="{{ true }}" hint-size="100%,70px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" default-value="{{ panelEmail }}" hint-size="100%,42px"></x-import></x-import>
+      <sc-if value="{{ panelNew }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Senha inicial" required="{{ true }}" hint="Mínimo de 8 caracteres" hint-size="100%,90px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Input" type="password" hint-size="100%,42px"></x-import></x-import></sc-if>
+      <div style="display:flex;flex-direction:column;gap:8px"><span style="font:600 12.5px/1.3 var(--font-ui);color:var(--ink-2)">Perfil</span><div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.RadioCard" title="CEO" hint-size="100%,48px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.RadioCard" title="Diretor" hint-size="100%,48px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.RadioCard" title="Colab." selected="{{ true }}" hint-size="100%,48px"></x-import></div></div>
+      <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Field" label="Diretoria" hint-size="100%,70px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Select" hint-size="100%,42px"><option>Operações</option><option>Jurídico</option><option>Sem diretoria</option></x-import></x-import>
+      <div style="display:flex;flex-direction:column;gap:12px;padding:16px;border:1px solid var(--border);border-radius:10px"><span style="font:700 11px/1 var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Permissões operacionais</span><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Checkbox" checked="{{ true }}" hint-size="100%,20px">Gerar planilha de priorização</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Checkbox" hint-size="100%,20px">Registrar devolução jurídica</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Checkbox" checked="{{ true }}" hint-size="100%,20px">Ordenar o Kanban</x-import></div>
+      <x-import component-from-global-scope="FINPECDesignSystem_f2149b.Checkbox" checked="{{ true }}" hint-size="100%,20px">Conta ativa</x-import>
+    </div>
+    <div style="padding:14px 22px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px"><sc-if value="{{ adminSel }}" hint-placeholder-val="{{ true }}"><span style="font:600 13px/1 var(--font-ui);color:var(--danger);padding:8px 4px;cursor:pointer">Excluir usuário</span></sc-if><span style="margin-left:auto;display:flex;gap:8px"><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="ghost" onClick="{{ closePanel }}" hint-size="90px,40px">Cancelar</x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="primary" onClick="{{ savePanel }}" hint-size="100px,40px">Salvar</x-import></span></div>
+  </aside>
+</sc-if>
+</sc-if>
+    </div>
+    <sc-if value="{{ pwa }}" hint-placeholder-val="{{ false }}">
+      <nav aria-label="Navegação principal" style="flex:0 0 auto;display:flex;background:var(--surface);border-top:1px solid var(--border);padding:6px 6px 0">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+          <span onClick="{{ t.go }}" role="tab" style="flex:1;min-width:0;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:{{ t.color }}">
+            <span style="position:relative;width:52px;height:30px;display:grid;place-items:center;border-radius:100px;background:{{ t.bg }}">{{ t.icon }}<sc-if value="{{ t.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-3px;right:4px;min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:100px;background:var(--accent);color:#fff;font:700 10.5px/18px var(--font-ui);text-align:center;box-shadow:0 0 0 2px var(--surface)">{{ t.badge }}</span></sc-if></span>
+            <span style="font:600 11px/1 var(--font-ui)">{{ t.label }}</span>
+          </span>
+        </sc-for>
+      </nav>
+      <div style="height:26px;flex:0 0 26px;background:var(--surface);display:grid;place-items:center"><span style="width:134px;height:5px;border-radius:100px;background:var(--ink);opacity:.85"></span></div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ showFab }}" hint-placeholder-val="{{ false }}">
+    <span onClick="{{ fabClick }}" aria-label="Nova demanda" title="Nova demanda" style="position:absolute;right:18px;bottom:104px;width:56px;height:56px;border-radius:16px;background:{{ fabBg }};color:#fff;display:grid;place-items:center;box-shadow:var(--shadow-lg);z-index:15;cursor:pointer">{{ i.plusL }}</span>
+  </sc-if>
+
+  <sc-if value="{{ moreOn }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMore }}" style="position:absolute;inset:0;background:rgba(24,22,18,.45);z-index:22"></div>
+    <div role="dialog" aria-label="Mais opções" style="position:absolute;left:0;right:0;bottom:0;z-index:23;background:var(--surface);border-radius:20px 20px 0 0;box-shadow:var(--shadow-lg);padding:10px 14px 30px;display:flex;flex-direction:column;gap:2px;max-height:82%;overflow:auto;box-sizing:border-box">
+      <span style="align-self:center;width:40px;height:5px;border-radius:100px;background:var(--border-strong);margin-bottom:10px;flex:none"></span>
+      <sc-for list="{{ moreNav }}" as="n" hint-placeholder-count="6">
+        <div onClick="{{ n.go }}" style="display:flex;align-items:center;gap:14px;min-height:50px;padding:0 10px;border-radius:10px;font:500 15px/1.2 var(--font-ui);color:var(--ink);cursor:pointer;background:{{ n.bg }}" style-hover="background:var(--surface-2)"><span style="display:grid;color:var(--primary)">{{ n.icon }}</span><span style="flex:1;min-width:0">{{ n.label }}</span><sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="font:700 11px/1 var(--font-ui);background:var(--neutral-soft);color:var(--muted);padding:4px 8px;border-radius:100px">{{ n.badge }}</span></sc-if><span style="display:grid;color:var(--faint)">{{ i.right }}</span></div>
+      </sc-for>
+      <div style="margin-top:10px;padding:14px 10px 0;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><span onClick="{{ toggleTheme }}" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro" style="width:44px;height:44px;margin-left:-10px;display:grid;place-items:center;border-radius:8px;color:var(--ink);cursor:pointer">{{ themeIcon }}</span><span style="font:500 12px/1 var(--font-ui);color:var(--muted)">{{ dateStr }} · <span style="font-family:var(--font-mono)">{{ timeStr }}</span></span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:40px;height:40px;flex:0 0 40px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--font-display);color:#fff;background:var(--primary)">{{ user.initials }}</span><div style="flex:1;min-width:0"><div style="font:600 14.5px/1.25 var(--font-ui);color:var(--ink)">{{ user.name }}</div><div style="font:500 12.5px/1.3 var(--font-ui);color:var(--muted)">{{ user.role }}</div></div><span onClick="{{ logout }}" aria-label="Sair" title="Sair" style="width:44px;height:44px;display:grid;place-items:center;border-radius:8px;color:var(--ink);cursor:pointer">{{ i.logoutL }}</span></div>
+        <div style="font:500 11.5px/1 var(--font-mono);color:var(--faint)">{{ release }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+
+  <sc-if value="{{ drawer }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeDrawer }}" style="position:absolute;inset:0;background:rgba(24,22,18,.45);z-index:20"></div>
+    <aside style="position:absolute;top:0;left:0;bottom:0;width:300px;background:var(--side);z-index:21;display:flex;flex-direction:column;color:var(--side-text)">
+      <div style="height:56px;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid var(--side-border)"><img src="assets/finpec-mark.png" alt="" style="height:24px;width:auto"><span style="font:700 15px/1 var(--font-display);letter-spacing:0.18em;color:#fff">FINPEC</span><span onClick="{{ closeDrawer }}" style="margin-left:auto;width:44px;height:44px;display:grid;place-items:center;cursor:pointer">{{ i.x }}</span></div>
+      <nav style="flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:2px">
+        <sc-for list="{{ mNav }}" as="n" hint-placeholder-count="10">
+          <sc-if value="{{ n.on }}" hint-placeholder-val="{{ false }}"><div onClick="{{ n.go }}" style="display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:7px;background:var(--side-active-bg);color:#fff;font:600 14px/1 var(--font-ui);box-shadow:inset 3px 0 0 var(--primary)"><span style="display:grid">{{ n.icon }}</span>{{ n.label }}<sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;font:700 11px/1 var(--font-ui);background:var(--side-3);padding:3px 7px;border-radius:100px">{{ n.badge }}</span></sc-if></div></sc-if>
+          <sc-if value="{{ n.off }}" hint-placeholder-val="{{ true }}"><div onClick="{{ n.go }}" style="display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:7px;font:500 14px/1 var(--font-ui);cursor:pointer"><span style="display:grid">{{ n.icon }}</span>{{ n.label }}<sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;font:700 11px/1 var(--font-ui);background:var(--side-3);color:#EFEAE0;padding:3px 7px;border-radius:100px">{{ n.badge }}</span></sc-if></div></sc-if>
+        </sc-for>
+      </nav>
+      <div style="border-top:1px solid var(--side-border);padding:14px 16px 18px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><span style="width:32px;height:32px;margin-left:-6px;display:grid;place-items:center;color:#EFEAE0;cursor:pointer" onClick="{{ toggleTheme }}" title="Alternar tema claro/escuro">{{ themeIcon }}</span><span style="font:500 12px/1 var(--font-ui);color:var(--side-text-dim)">{{ dateStr }} · <span style="font-family:var(--font-mono)">{{ timeStr }}</span></span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 var(--font-display);color:#fff;background:var(--primary)">{{ user.initials }}</span><div style="flex:1;min-width:0"><div style="font:600 14px/1.25 var(--font-ui);color:#fff">{{ user.name }}</div><div style="font-size:12.5px">{{ user.role }}</div></div><span onClick="{{ logout }}" aria-label="Sair" style="width:44px;height:44px;display:grid;place-items:center;color:#EFEAE0;cursor:pointer">{{ i.logoutL }}</span></div><div style="font:500 11.5px/1 var(--font-mono);color:var(--side-text-dim)">{{ release }}</div>
+      </div>
+    </aside>
+  </sc-if>
+</sc-if>
+
+<sc-if value="{{ expOn }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeExp }}" style="position:absolute;inset:0;background:rgba(24,22,18,.6);z-index:45"></div>
+  <div role="dialog" aria-label="{{ expTitle }}" style="position:absolute;top:50%;left:50%;width:{{ expW }};height:{{ expH }};transform:{{ expT }};z-index:46;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lg);display:flex;flex-direction:column;gap:10px;padding:16px 20px;box-sizing:border-box">
+    <div style="display:flex;align-items:flex-start;gap:12px"><div style="flex:1;min-width:0"><div style="font:600 16px/1.3 var(--font-ui)">{{ expTitle }}</div><div style="font-size:12.5px;color:var(--muted);margin-top:3px">{{ expSub }}</div></div><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.download }}" onClick="{{ png }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="FINPECDesignSystem_f2149b.Button" variant="secondary" size="sm" icon="{{ i.x }}" onClick="{{ closeExp }}" title="Fechar" aria-label="Fechar" hint-size="32px,32px"></x-import></div>
+    <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center">{{ expChart }}</div>
+  </div>
+</sc-if>
+<sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:50%;bottom:{{ toastB }};transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:var(--ink);color:var(--surface);font:600 13.5px/1.3 var(--font-ui);box-shadow:var(--shadow-lg);white-space:nowrap"><span style="display:grid;color:var(--ok)">{{ i.checkC }}</span>{{ toastMsg }}</div>
+</sc-if>
+<sc-if value="{{ splashOn }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:80;background:#0F0F0E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px"><img src="assets/finpec-mark.png" alt="" style="height:68px;width:auto"><div style="font:500 30px/1 var(--font-display);color:#fff">FOD</div><div style="font:400 12px/1 var(--font-ui);letter-spacing:0.13em;text-transform:uppercase;color:#C9C5BD">FinPec On Demand</div></div>
+</sc-if>
+</div>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;dispositivo&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Web&quot;,&quot;PWA&quot;,&quot;Web responsive&quot;],&quot;default&quot;:&quot;Web&quot;,&quot;tsType&quot;:&quot;'Web'|'PWA'|'Web responsive'&quot;},&quot;largura&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Desktop · 1440&quot;,&quot;Notebook · 1280&quot;,&quot;Tablet horizontal · 1180&quot;,&quot;Tablet · 834&quot;,&quot;Celular · 390&quot;],&quot;default&quot;:&quot;Desktop · 1440&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;perfil&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CEO&quot;,&quot;Diretor&quot;,&quot;Colaborador&quot;],&quot;default&quot;:&quot;CEO&quot;,&quot;tsType&quot;:&quot;'CEO'|'Diretor'|'Colaborador'&quot;}}">
+class Component extends DCLogic {
+  state = { screen: 'login', device: null, collapsed: null, light: true, drawer: false, editing: false, ask: false, aprovSel: 0, prio: 'P0', toast: '', mStage: 1, search: -1, panel: null, view: 'lista', tab: 0, dir: 'Jurídico', titulo: '', desc: '', comment: '', extra: [], file: '', sel: null, tick: 0, showPwd: false };
+  lay() {
+    const S = this.state, pd = this.props.dispositivo;
+    const mobLegacy = pd === 'Mobile-web-responsive' || pd === 'Mobile';
+    const devRaw = S.device || (mobLegacy || pd === 'Web responsive' ? 'Resp' : pd) || 'Web';
+    const widths = [['Desktop · 1440', 1440, 860], ['Notebook · 1280', 1280, 800], ['Tablet horizontal · 1180', 1180, 820], ['Tablet · 834', 834, 1112], ['Celular · 390', 390, 844]];
+    const wLabel = S.largura || (mobLegacy ? 'Celular · 390' : this.props.largura) || 'Desktop · 1440';
+    const wSel = widths.find((w) => w[0] === wLabel) || widths[0];
+    const resp = devRaw === 'Resp', pwaSel = devRaw === 'PWA';
+    const fw = resp ? wSel[1] : pwaSel ? 390 : (S.vw || 1440);
+    const device = pwaSel ? 'PWA' : fw < 768 ? 'Mobile' : 'Web';
+    return { devRaw, widths, wSel, resp, pwaSel, fw, device };
+  }
+  centerChip(smooth) {
+    const row = this.chipRow; if (!row) return;
+    const chip = row.querySelector('[data-chip-on]'); if (!chip) return;
+    const left = chip.offsetLeft - (row.clientWidth - chip.offsetWidth) / 2;
+    row.scrollTo({ left: Math.max(0, left), behavior: smooth === false ? 'auto' : 'smooth' });
+  }
+  applyTheme(forceLight) {
+    const DARK = { '--bg': '#12110E', '--surface': '#1C1A16', '--surface-2': '#23211C', '--border': '#2E2B25', '--border-strong': '#3C3830', '--ink': '#F2EFE9', '--ink-2': '#D3CEC4', '--muted': '#A8A194', '--faint': '#7C766A', '--primary': '#4F82E0', '--primary-hover': '#6893E6', '--primary-press': '#3F70CC', '--primary-soft': '#1C273D', '--primary-ink': '#A8C2F2', '--accent': '#E2603A', '--accent-soft': '#3A2119', '--accent-ink': '#F2A285', '--ok': '#62AE73', '--ok-soft': '#1C2B1F', '--ok-ink': '#9ED2A9', '--warn': '#D49B32', '--warn-soft': '#332816', '--warn-ink': '#E9C47C', '--danger': '#E2614F', '--danger-soft': '#3A1C18', '--danger-ink': '#F3A398', '--info': '#5A8BE2', '--info-soft': '#1C273D', '--info-ink': '#A8C2F2', '--neutral-soft': '#2A2722', '--neutral-ink': '#C9C3B8', '--shadow-sm': '0 1px 2px rgba(0,0,0,.35)', '--shadow': '0 4px 14px rgba(0,0,0,.4)', '--shadow-lg': '0 18px 48px rgba(0,0,0,.55)', '--focus-ring': '0 0 0 3px rgba(79,130,224,.35)' };
+    const lt = typeof forceLight === 'boolean' ? forceLight : this.state.light;
+    const r = document.documentElement, dark = !lt;
+    this._appliedLight = lt;
+    Object.keys(DARK).forEach((k) => dark ? r.style.setProperty(k, DARK[k]) : r.style.removeProperty(k));
+    r.style.colorScheme = dark ? 'dark' : 'light';
+    r.setAttribute('data-theme', dark ? 'dark' : 'light');
+    try { localStorage.setItem('fod-theme', dark ? 'dark' : 'light'); } catch (e) {}
+  }
+  componentDidMount() {
+    try { const t = localStorage.getItem('fod-theme'); if (t) { const lt = t !== 'dark'; this.setState({ light: lt }, () => this.applyTheme(lt)); } else this.applyTheme(); } catch (e) { this.applyTheme(); }
+    this._clk = setInterval(() => this.setState({ now: Date.now() }), 30000);
+    this._lastStage = this.state.mStage; this._lastScreen = this.state.screen;
+    this._rs = () => this.setState({ vw: window.innerWidth }); window.addEventListener('resize', this._rs); this._rs();
+  }
+  componentDidUpdate(pp) {
+    { const st = this.state; if (this._lastStage !== st.mStage || this._lastScreen !== st.screen) { const smooth = this._lastScreen === st.screen; this._lastStage = st.mStage; this._lastScreen = st.screen; requestAnimationFrame(() => this.centerChip(smooth)); } }
+    if (this._appliedLight !== this.state.light) this.applyTheme();
+    if (pp.dispositivo !== this.props.dispositivo || pp.largura !== this.props.largura) this.setState({ device: null, largura: null, collapsed: null, more: false, drawer: false });
+    if (pp.perfil !== this.props.perfil) this.setState({ perfil: null });
+  }
+  componentWillUnmount() { clearInterval(this._clk); clearTimeout(this._tt); clearTimeout(this._sp); window.removeEventListener('resize', this._rs); const r = document.documentElement; ['--bg','--surface','--surface-2','--border','--border-strong','--ink','--ink-2','--muted','--faint','--primary','--primary-hover','--primary-press','--primary-soft','--primary-ink','--accent','--accent-soft','--accent-ink','--ok','--ok-soft','--ok-ink','--warn','--warn-soft','--warn-ink','--danger','--danger-soft','--danger-ink','--info','--info-soft','--info-ink','--neutral-soft','--neutral-ink','--shadow-sm','--shadow','--shadow-lg','--focus-ring'].forEach((k) => r.style.removeProperty(k)); r.style.colorScheme = ''; }
+  go(s, extra) {
+    this.setState(Object.assign({ screen: s, more: false, drawer: false, editing: false, ask: false, panel: null, search: -1 }, extra || {}));
+    if (this.scrollEl) this.scrollEl.scrollTop = 0;
+  }
+  toast(t) { clearTimeout(this._tt); this.setState({ toast: t }); this._tt = setTimeout(() => this.setState({ toast: '' }), 2600); }
+  move(g, k, d) {
+    const j = k + d; if (j < 0 || j >= g.cards.length) return;
+    const t = g.cards[k]; g.cards[k] = g.cards[j]; g.cards[j] = t;
+    g.cards.forEach((c, n) => { if (c.pos) c.pos = (n + 1) + 'º'; });
+    this.setState((s) => ({ tick: s.tick + 1 }));
+  }
+  renderVals() {
+    const b = this.baseVals();
+    const S = this.state;
+    if (!this._cols) this._cols = b.cols;
+    if (!this._fila) this._fila = b.fila.slice();
+    const L = this.lay(), devRaw = L.devRaw, devSel = devRaw, resp = L.resp, wSel = L.wSel;
+    const device = L.device, framed = L.pwaSel;
+    const col = S.collapsed == null ? L.fw < 1366 : S.collapsed;
+    const pwa = device === 'PWA', m = device === 'Mobile' || pwa, web = !m, mBrowser = m && !pwa;
+    const perfil = b.perfil;
+    const isCEO = perfil === 'CEO';
+    const is = {};
+    ['login', 'dashboard', 'bi', 'ranking', 'kanban', 'minhas', 'arquivo', 'nova', 'detalhe', 'aprovacao', 'planilha', 'admin', 'conta'].forEach((s) => { is[s] = S.screen === s; });
+    const titles = { dashboard: 'Dashboard', bi: 'BI', ranking: 'Ranking', kanban: 'Kanban geral', minhas: 'Minhas demandas', arquivo: 'Arquivo', nova: 'Nova demanda', detalhe: 'Demanda', aprovacao: 'Aprovação CEO', planilha: 'Priorizar em planilha', admin: 'Usuários e diretorias', conta: 'Minha conta' };
+    const canSort = perfil !== 'Colaborador';
+    this._cols.forEach((col, ci) => {
+      col.ci = ci;
+      col.searchOpen = S.search === ci;
+      col.toggleSearch = () => this.setState({ search: S.search === ci ? -1 : ci });
+      col.pick = () => this.setState({ mStage: ci });
+      col.empty = !col.count;
+      const colOv = S.colOpen && S.colOpen[ci];
+      const isOpen = colOv == null ? col.count > 0 : colOv;
+      col.open = isOpen; col.rail = !isOpen;
+      col.toggleCol = () => this.setState((st) => ({ colOpen: Object.assign({}, st.colOpen, { [ci]: !isOpen }), search: st.search === ci ? -1 : st.search }));
+      col.chipOn = S.mStage === ci; col.chipOff = S.mStage !== ci;
+      (col.groups || []).forEach((g) => g.cards.forEach((c, k) => {
+        c.hover = false;
+        c.sortable = canSort && !!c.pos;
+        c.isFirst = k === 0; c.notFirst = k > 0; c.isLast = k === g.cards.length - 1; c.notLast = k < g.cards.length - 1;
+        c.open = () => this.go('detalhe', { sel: Object.assign({}, c, { etapa: col.name }) });
+        c.up = (e) => { e.stopPropagation(); this.move(g, k, -1); };
+        c.down = (e) => { e.stopPropagation(); this.move(g, k, 1); };
+      }));
+    });
+    const mCol = this._cols[S.mStage];
+    const sel = S.sel || Object.assign({}, this._cols[2].groups[0].cards[0], { etapa: 'Em andamento' });
+    const etapaIdx = { 'Aguardando aprovação CEO': 0, 'Aprovada / Pendente': 1, 'Em andamento': 2, 'Aguardando terceiros': 2, 'Concluída': 3 }[sel.etapa] ?? 2;
+    const steps = b.flowFn([{ t: 'Aguardando aprovação CEO', m: '10/09, 09:12', w: sel.sol }, { t: 'Aprovada / Pendente', m: etapaIdx >= 1 ? '18/09, 19:04' : '—', w: etapaIdx >= 1 ? 'Fernando Sartori' : '' }, { t: 'Em andamento', m: etapaIdx >= 2 ? '05/10, 18:47' : '—', w: etapaIdx >= 2 ? 'Vagner Araújo' : '', note: sel.etapa === 'Aguardando terceiros' ? 'Aguardando terceiros' : '' }, { t: 'Concluída', m: etapaIdx >= 3 ? (sel.concl || '16/10') : '—' }, { t: 'Recusada / Cancelada', term: true }], etapaIdx);
+    const setEtapa = (e, msg) => { this.setState({ sel: Object.assign({}, sel, { etapa: e }), ask: false }); this.toast(msg); };
+    const fila = this._fila;
+    const aprovItem = fila[Math.min(S.aprovSel, fila.length - 1)] || null;
+    const prioCards = ['P0', 'P1', 'P2'].map((p, k) => ({ p, desc: ['Verde até 14 dias · vermelho acima de 21', 'Verde até 30 dias · vermelho acima de 45', 'Verde até 45 dias · vermelho acima de 75'][k], sel: S.prio === p, pick: () => this.setState({ prio: p }) }));
+    const dirs = [['Jurídico', 'Diretor: Vagner Araújo'], ['Financeiro', 'Diretor: Raphael Maciel'], ['Mercado', 'Sem diretor associado'], ['Operações', 'Sem diretor associado']].map((d) => ({ name: d[0], desc: d[1], sel: S.dir === d[0], pick: () => this.setState({ dir: d[0] }) }));
+    const tOk = S.titulo.trim().length >= 3, dOk = S.desc.trim().length >= 10;
+    const side = S.light
+      ? { variant: 'white', bg: '#FFFFFF', border: 'var(--border)', ink: 'var(--ink)', sub: 'var(--muted)', dim: 'var(--muted)', hov: 'var(--surface-2)' }
+      : { variant: 'dark', bg: 'var(--side)', border: 'var(--side-border)', ink: '#FFFFFF', sub: 'var(--side-text)', dim: 'var(--side-text-dim)', hov: 'var(--side-2)' };
+    const nav = b.nav.map((g) => Object.assign({}, g, { items: g.items.map((it) => it.id === 'aprovacao' ? Object.assign({}, it, { badge: fila.length || null, hot: fila.length > 0 }) : it) }));
+    const mNav = [];
+    nav.forEach((g) => g.items.forEach((it) => mNav.push({ label: it.label, icon: it.icon, badge: it.badge || '', hasBadge: it.badge != null && it.badge !== '', on: S.screen === it.id, off: S.screen !== it.id, go: () => this.go(it.id) })));
+    const comments = b.comments.concat(S.extra);
+    const adminSel = S.panel === 'novo' ? null : b.adminUsers.find((u) => u.name === S.panel) || null;
+    b.adminUsers.forEach((u) => { u.edit = () => this.setState({ panel: u.name }); });
+    b.arquivo.forEach((a) => { a.open = () => this.go('detalhe', { sel: { title: a.title, dir: 'Jurídico', sol: a.sol, aging: a.res, farol: 'Verde', tone: 'ok', etapa: 'Concluída', concl: a.concl } }); });
+    b.vermelhas.forEach((v) => { v.open = () => this.go('detalhe', { sel: { title: v.title, dir: 'Jurídico', sol: 'Vagner Araújo', aging: v.aging, farol: 'Vermelho', tone: 'danger', etapa: v.etapa } }); });
+    b.minhas.forEach((x) => { x.open = () => this.go('detalhe', { sel: { title: x.title, dir: x.dir, sol: 'Fernando Sartori', aging: x.aging, farol: x.farol, tone: x.tone, etapa: x.etapa } }); });
+    fila.forEach((f, k) => { f.isSel = aprovItem === f; f.notSel = aprovItem !== f; f.pick = () => this.setState({ aprovSel: k }); });
+    const startPWA = () => { clearTimeout(this._sp); this.setState({ device: 'PWA', splash: true, drawer: false, more: false }); this._sp = setTimeout(() => this.setState({ splash: false }), 1400); };
+    const setWeb = () => this.setState({ device: 'Web', more: false, collapsed: null }), setResp = () => this.setState({ device: 'Resp', more: false, collapsed: null });
+    const devOpts = [['Web', 'Web', setWeb], ['PWA', 'PWA', startPWA], ['Resp', 'Web responsive', setResp]].map((d) => ({ label: d[1], on: devSel === d[0], off: devSel !== d[0], go: d[2] }));
+    const widthOpts = L.widths.map((w) => ({ label: w[0], on: w === wSel, off: w !== wSel, go: () => this.setState({ largura: w[0], collapsed: null, drawer: false, more: false }) }));
+    const perfOpts = ['CEO', 'Diretor', 'Colaborador'].map((p) => ({ label: p, on: perfil === p, off: perfil !== p, go: () => this.setState({ perfil: p }, () => { if (!is.login) this.go(p === 'Colaborador' ? 'kanban' : 'dashboard'); }) }));
+    const headVals = {
+      showHead: devRaw !== 'Web', isWebLay: devRaw === 'Web', resp, widthOpts, perfOpts,
+      layList: ['Web', 'PWA', 'Web responsive'], layVal: devRaw === 'Resp' ? 'Web responsive' : devRaw,
+      onLayout: (e) => { const v = e.target.value; if (v === 'PWA') startPWA(); else if (v === 'Web responsive') setResp(); else setWeb(); },
+      larList: L.widths.map((w) => w[0]), larVal: wSel[0],
+      onLargura: (e) => this.setState({ largura: e.target.value, collapsed: null, drawer: false, more: false }),
+      perfList: ['CEO', 'Diretor', 'Colaborador'], perfVal: perfil,
+      onPerfil: (e) => { const o = perfOpts.find((p) => p.label === e.target.value); if (o) o.go(); },
+      isDark: !S.light, darkTrack: S.light ? '#3A3731' : 'var(--primary)', darkKnob: S.light ? '2px' : '18px',
+      offTrackS: S.offline ? 'var(--warn)' : '#3A3731', offKnob: S.offline ? '18px' : '2px',
+      headSub: resp ? 'On Demand · Web responsive' : 'On Demand · PWA',
+      headTitle: resp ? 'FOD no navegador, em qualquer largura' : 'FOD instalado no celular',
+      headDesc: resp ? 'O site se adapta à tela sem virar aplicativo: menu lateral recolhido no notebook e no tablet, menu sanduíche no celular e Kanban com uma etapa por vez. Escolha uma largura e navegue normalmente.' : 'Aberto pela tela inicial, em tela cheia: barra de abas por perfil, painel "Mais", botão Nova demanda e aviso de conexão. Use "Offline" para simular a perda de rede.',
+      dims: resp ? wSel[1] + ' × ' + wSel[2] : devRaw === 'PWA' ? '390 × 844' : 'tela cheia',
+    };
+    const allItems = []; nav.forEach((g) => g.items.forEach((it) => allItems.push(it)));
+    const tabIds = ({ CEO: ['dashboard', 'kanban', 'aprovacao', 'minhas'], Diretor: ['dashboard', 'kanban', 'minhas', 'bi'], Colaborador: ['kanban', 'minhas', 'ranking'] })[perfil] || ['kanban', 'minhas'];
+    const shortL = { dashboard: 'Início', kanban: 'Kanban', aprovacao: 'Aprovação', minhas: 'Minhas', bi: 'BI', ranking: 'Ranking' };
+    const flowScr = ['detalhe', 'nova'];
+    const tab = (label, icon, on, go, badge) => ({ label, icon, go, on, color: on ? 'var(--primary)' : 'var(--muted)', bg: on ? 'var(--primary-soft)' : 'transparent', badge: badge || '', hasBadge: !!badge });
+    const tabs = tabIds.map((id) => { const it = allItems.find((x) => x.id === id) || {}; return tab(shortL[id] || it.label, it.icon, !S.more && S.screen === id, () => this.go(id), id === 'aprovacao' ? (fila.length || '') : ''); });
+    tabs.push(tab('Mais', b.i.menuT, !!S.more || (!tabIds.includes(S.screen) && !flowScr.includes(S.screen)), () => this.setState({ more: true })));
+    const moreNav = allItems.filter((it) => !tabIds.includes(it.id)).map((it) => ({ label: it.label, icon: it.icon, go: () => this.go(it.id), badge: it.badge || '', hasBadge: it.badge != null && it.badge !== '', bg: S.screen === it.id ? 'var(--primary-soft)' : 'transparent' }));
+    const pwaApp = pwa && !is.login, off = !!S.offline;
+    const pwaVals = {
+      pwaApp, offline: pwaApp && off, moreOn: pwaApp && !!S.more, closeMore: () => this.setState({ more: false }),
+      splashOn: pwa && !!S.splash,
+      sbBg: pwa && is.login ? '#0F0F0E' : pwa ? 'var(--surface)' : 'var(--surface-2)', sbFg: pwa && is.login ? '#FFFFFF' : 'var(--ink)',
+      canBack: flowScr.includes(S.screen), goBack: () => this.go(S.screen === 'nova' ? (tabIds[0]) : 'kanban'),
+      syncLabel: off ? 'Offline' : 'Sincronizado', syncDot: off ? 'var(--warn)' : 'var(--ok)', syncFg: off ? 'var(--warn-ink)' : 'var(--muted)',
+      showFab: pwaApp && ['dashboard', 'kanban', 'minhas'].includes(S.screen),
+      fabBg: off ? 'var(--faint)' : 'var(--primary)',
+      fabClick: () => off ? this.toast('Sem conexão. Crie a demanda quando a rede voltar.') : this.go('nova', { titulo: '', desc: '' }),
+      toastB: pwaApp ? '104px' : '24px',
+      toggleOffline: () => this.setState({ offline: !S.offline }), offFg: off ? '#fff' : 'var(--ink-2)', offBg: off ? 'var(--warn)' : 'transparent',
+    };
+    const now = new Date();
+    const months = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+    const EXPT = { ce: ['Criadas × entregues', '12/10 a 18/10 · parcial · Criadas 10 · Entregues 6'], aging: ['Evolução do aging', 'Aging médio 23 dias'], estoque: ['Estoque de demandas', 'Em aberto 42'], pct: ['Evolução do percentual entregue', 'Concluídas 64,5%'], criadas: ['Demandas criadas na semana', '115 novas nas 12 semanas'], entregues: ['Demandas entregues na semana', '72 entregas no período'] };
+    const expand = {}; Object.keys(EXPT).forEach((k) => { expand[k] = () => this.setState({ exp: k }); });
+    const mt = (k, v, hot) => ({ k, v, c: hot ? 'var(--danger-ink)' : 'var(--ink)' });
+    const rankTiles = [
+      { pos: '1º', dir: 'Financeiro', resp: 'Raphael Maciel', score: '14', w: '14%', bd: 'var(--primary)', posBg: 'var(--primary)', posFg: '#fff', m: [mt('% concluído', '0%'), mt('% no verde', '0%'), mt('Aging aberto', '56 dias'), mt('Vermelhas', '1'), mt('P0 vermelhas', '0')] },
+      { pos: '2º', dir: 'Jurídico', resp: 'Vagner Araújo', score: '0', w: '0%', bd: 'var(--border)', posBg: 'var(--surface-2)', posFg: 'var(--ink)', m: [mt('% concluído', '9,5%'), mt('% no verde', '93,3%'), mt('Aging aberto', '23,1 dias'), mt('Vermelhas', '20', true), mt('P0 vermelhas', '13', true)] },
+    ];
+    return Object.assign({}, b, {
+      rankTiles, expand, expOn: !!S.exp, expChart: b.expChartEl, expTitle: S.exp ? EXPT[S.exp][0] : '', expSub: S.exp ? EXPT[S.exp][1] + (m ? ' · gire o aparelho' : '') : '',
+      expW: m ? '804px' : 'min(1200px, calc(100% - 64px))', expH: m ? '350px' : 'min(640px, calc(100% - 64px))', expT: m ? 'translate(-50%,-50%) rotate(90deg)' : 'translate(-50%,-50%)',
+      closeExp: () => this.setState({ exp: null }),
+      dateStr: now.getDate() + ' de ' + months[now.getMonth()] + ' de ' + now.getFullYear(),
+      timeStr: String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'),
+      release: '1.0.0',
+      loginW: m ? '100%' : '500px', loginPad: m ? '56px 24px 32px' : '112px 40px 48px',
+      relOpen: !!S.relOpen, relBorder: S.relOpen ? '0' : '2px solid var(--primary)', relChev: S.relOpen ? b.i.left : b.i.right,
+      toggleRel: () => this.setState({ relOpen: !S.relOpen }),
+      S, m, web, is, isCEO, canSort, sel, steps, mCol, fila, aprovItem, hasFila: fila.length > 0, noFila: fila.length === 0, prioCards, dirs, comments, adminSel, side, nav, mNav,
+      cols: this._cols,
+      inApp: !is.login,
+      title: titles[S.screen] || '',
+      appW: framed ? '390px' : resp ? wSel[1] + 'px' : '100%', appH: framed ? '844px' : resp ? wSel[2] + 'px' : 'calc(100vh - 44px)', appM: framed ? '28px auto 120px' : resp ? '24px max(24px, calc((100% - ' + wSel[1] + 'px) / 2)) 120px' : '0', appR: framed ? '38px' : resp ? '12px' : '0', appB: framed ? '10px solid var(--side)' : resp ? '1px solid var(--border-strong)' : '0', appS: framed || resp ? 'var(--shadow-lg)' : 'none',
+      sideW: col ? '76px' : '264px', appCls: col ? 'fp-app collapsed' : 'fp-app',
+      expanded: !col, collapsed: col,
+      pad: pwa ? '18px 16px 104px' : m ? '18px 16px 40px' : '28px 32px 48px',
+      themeIcon: S.light ? b.i.sun : b.i.moon,
+      tOk, dOk, formOk: tOk && dOk, formBad: !(tOk && dOk), tLen: S.titulo.trim().length, dLen: S.desc.trim().length,
+      editing: S.editing, notEditing: !S.editing, ask: S.ask,
+      etapa: sel.etapa,
+      notAnd: sel.etapa !== 'Em andamento',
+      isAprov: sel.etapa === 'Aprovada / Pendente', isAnd: sel.etapa === 'Em andamento', isTerc: sel.etapa === 'Aguardando terceiros', isConc: sel.etapa === 'Concluída',
+      lista: S.view === 'lista', quadro: S.view === 'quadro',
+      toastOn: !!S.toast, toastMsg: S.toast,
+      panelOpen: !!S.panel, panelNew: S.panel === 'novo', panelName: adminSel ? adminSel.name : '', panelEmail: adminSel ? adminSel.email : '',
+      hasFile: !!S.file, noFile: !S.file,
+      mFirst: S.mStage === 0, mLast: S.mStage === this._cols.length - 1,
+      scrollRef: (el) => { this.scrollEl = el; },
+      chipRowRef: this._chipRef || (this._chipRef = (el) => { this.chipRow = el; if (el) requestAnimationFrame(() => this.centerChip(false)); }),
+      devOpts, pwa, mBrowser, tabs, moreNav, appDir: m ? 'column' : 'row',
+      ...pwaVals, ...headVals,
+      webOn: web, mobOn: m,
+      login: () => this.go(perfil === 'Colaborador' ? 'kanban' : 'dashboard'),
+      logout: () => this.go('login'),
+      toggleTheme: () => { const nl = !S.light; this.setState({ light: nl }, () => this.applyTheme(nl)); },
+      toggleCollapse: () => this.setState({ collapsed: !col }),
+      navTo: (id) => this.go(id),
+      openDrawer: () => this.setState({ drawer: true }), closeDrawer: () => this.setState({ drawer: false }), drawer: S.drawer,
+      goNova: () => this.go('nova', { titulo: '', desc: '' }), goKanban: () => this.go('kanban'), goConta: () => this.go('conta'), goBI: () => this.go('bi'), goRanking: () => this.go('ranking'), goArquivo: () => this.go('arquivo'), goBack: () => this.go(S.sel && S.sel.etapa === 'Concluída' ? 'arquivo' : 'kanban'),
+      mPrev: () => this.setState({ mStage: Math.max(0, S.mStage - 1) }), mNext: () => this.setState({ mStage: Math.min(this._cols.length - 1, S.mStage + 1) }),
+      setTitulo: (e) => this.setState({ titulo: e.target.value }), setDesc: (e) => this.setState({ desc: e.target.value }), setComment: (e) => this.setState({ comment: e.target.value }),
+      criar: () => { this.toast('Demanda criada e enviada para aprovação'); this.go('minhas'); },
+      sendComment: () => { if (!S.comment.trim()) return; this.setState({ extra: S.extra.concat([{ who: b.user.name, ini: b.user.initials, when: '28/10/2026, 23:40:12', kind: 'Comentário', tone: 'neutral', text: S.comment }]), comment: '' }); this.toast('Comentário enviado'); },
+      noComment: !S.comment.trim(),
+      startEdit: () => this.setState({ editing: true }), cancelEdit: () => this.setState({ editing: false }), saveEdit: () => { this.setState({ editing: false }); this.toast('Alterações salvas'); },
+      askData: () => this.setState({ ask: !S.ask }),
+      confirmAsk: () => setEtapa('Aguardando terceiros', 'Solicitação enviada ao demandante'),
+      start: () => setEtapa('Em andamento', 'Execução iniciada'), finish: () => setEtapa('Concluída', 'Entrega finalizada'), resume: () => setEtapa('Em andamento', 'Execução retomada'),
+      cancelDem: () => this.toast('Informe a justificativa para cancelar'),
+      fes: () => this.toast('Envio ao FES autorizado'), delegar: () => this.toast('Demanda delegada'),
+      aprovar: () => { const k = fila.indexOf(aprovItem); if (k >= 0) fila.splice(k, 1); this.setState({ aprovSel: 0 }); this.toast('Demanda aprovada como ' + S.prio); },
+      recusar: () => this.toast('Informe a justificativa para recusar'),
+      baixar: () => this.toast('Planilha gerada para Jurídico'), pickFile: () => this.setState({ file: 'priorizacao-juridico-rodada-07.xlsx' }), registrar: () => { this.setState({ file: '' }); this.toast('Devolução registrada'); },
+      salvarConta: () => this.toast('Alterações salvas'),
+      novoUsuario: () => this.setState({ panel: 'novo' }), closePanel: () => this.setState({ panel: null }), savePanel: () => { this.setState({ panel: null }); this.toast(S.panel === 'novo' ? 'Usuário criado' : 'Usuário atualizado'); },
+      setLista: () => this.setState({ view: 'lista' }), setQuadro: () => this.setState({ view: 'quadro' }),
+      copiar: () => this.toast('Gráfico copiado'), png: () => this.toast('PNG baixado'),
+      togglePwd: () => this.setState({ showPwd: !S.showPwd }), pwdType: S.showPwd ? 'text' : 'password', pwdLabel: S.showPwd ? 'Ocultar' : 'Mostrar',
+    });
+  }
+  baseVals() {
+    const h = React.createElement;
+    const ic = (parts, s = 18) => h('svg', { width: s, height: s, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' },
+      parts.map((p, k) => typeof p === 'string' ? h('path', { key: k, d: p }) : h(p[0], Object.assign({ key: k }, p[1]))));
+    const i = {
+      dash: ic([['rect', { x: 3, y: 3, width: 7, height: 9, rx: 1.5 }], ['rect', { x: 14, y: 3, width: 7, height: 5, rx: 1.5 }], ['rect', { x: 14, y: 12, width: 7, height: 9, rx: 1.5 }], ['rect', { x: 3, y: 16, width: 7, height: 5, rx: 1.5 }]]),
+      bi: ic(['M3 3v18h18', 'M7 15l4-5 3 3 5-7']),
+      trophy: ic(['M8 21h8', 'M12 17v4', 'M7 4h10v5a5 5 0 0 1-10 0z', 'M17 5h3v2a3 3 0 0 1-3 3', 'M7 5H4v2a3 3 0 0 0 3 3']),
+      kanban: ic([['rect', { x: 3, y: 3, width: 18, height: 18, rx: 2 }], 'M8 7v7', 'M12 7v4', 'M16 7v9']),
+      mine: ic(['M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2', ['circle', { cx: 9, cy: 7, r: 4 }], 'M16 11l2 2 4-4']),
+      archive: ic([['rect', { x: 3, y: 4, width: 18, height: 4, rx: 1 }], 'M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8', 'M10 12h4']),
+      approve: ic(['M9 11l3 3L22 4', 'M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11']),
+      sheet: ic([['rect', { x: 3, y: 3, width: 18, height: 18, rx: 2 }], 'M3 9h18', 'M3 15h18', 'M9 3v18']),
+      shield: ic(['M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z']),
+      user: ic([['circle', { cx: 12, cy: 8, r: 4 }], 'M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1']),
+      plus: ic(['M12 5v14', 'M5 12h14'], 16),
+      logout: ic(['M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4', 'M16 17l5-5-5-5', 'M21 12H9'], 16),
+      logoutL: ic(['M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4', 'M16 17l5-5-5-5', 'M21 12H9'], 19),
+      moon: ic(['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z'], 19),
+      sun: ic([['circle', { cx: 12, cy: 12, r: 4 }], 'M12 2v2', 'M12 20v2', 'M4.93 4.93l1.41 1.41', 'M17.66 17.66l1.41 1.41', 'M2 12h2', 'M20 12h2', 'M6.34 17.66l-1.41 1.41', 'M19.07 4.93l-1.41 1.41'], 19),
+      checkW: ic(['M20 6 9 17l-5-5'], 13),
+      expand: ic(['M15 3h6v6', 'M9 21H3v-6', 'M21 3l-7 7', 'M3 21l7-7'], 15),
+      signal: ic([['rect', { x: 2, y: 15, width: 3, height: 6, rx: 1, fill: 'currentColor', stroke: 'none' }], ['rect', { x: 7.5, y: 11, width: 3, height: 10, rx: 1, fill: 'currentColor', stroke: 'none' }], ['rect', { x: 13, y: 7, width: 3, height: 14, rx: 1, fill: 'currentColor', stroke: 'none' }], ['rect', { x: 18.5, y: 3, width: 3, height: 18, rx: 1, fill: 'currentColor', stroke: 'none' }]], 15),
+      wifi: ic(['M5 12.55a11 11 0 0 1 14.08 0', 'M1.42 9a16 16 0 0 1 21.16 0', 'M8.53 16.11a6 6 0 0 1 6.95 0', 'M12 20h.01'], 16),
+      battery: ic([['rect', { x: 1, y: 6, width: 19, height: 12, rx: 3 }], ['rect', { x: 3.5, y: 8.5, width: 12, height: 7, rx: 1.2, fill: 'currentColor', stroke: 'none' }], 'M23 10v4'], 24),
+      lock: ic([['rect', { x: 5, y: 11, width: 14, height: 10, rx: 2 }], 'M8 11V7a4 4 0 0 1 8 0v4'], 13),
+      wifiOff: ic(['M1 1l22 22', 'M16.72 11.06A10.94 10.94 0 0 1 19 12.55', 'M5 12.55a10.94 10.94 0 0 1 5.17-2.39', 'M10.71 5.05A16 16 0 0 1 22.58 9', 'M1.42 9a15.91 15.91 0 0 1 4.7-2.88', 'M8.53 16.11a6 6 0 0 1 6.95 0', 'M12 20h.01'], 15),
+      plusL: ic(['M12 5v14', 'M5 12h14'], 24),
+      backL: ic(['M15 18l-6-6 6-6'], 22),
+      menuT: ic(['M3 6h18', 'M3 12h18', 'M3 18h18'], 20),
+      collapseCol: ic(['M11 17l-5-5 5-5', 'M18 17l-5-5 5-5'], 15),
+      expandCol: ic(['M13 17l5-5-5-5', 'M6 17l5-5-5-5'], 15),
+      search: ic([['circle', { cx: 11, cy: 11, r: 7 }], 'M21 21l-4.3-4.3'], 16),
+      filter: ic(['M22 3H2l8 9.46V19l4 2v-8.54z'], 15),
+      copy: ic([['rect', { x: 9, y: 9, width: 13, height: 13, rx: 2 }], 'M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'], 15),
+      download: ic(['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4', 'M7 10l5 5 5-5', 'M12 15V3'], 15),
+      upload: ic(['M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4', 'M17 8l-5-5-5 5', 'M12 3v12'], 22),
+      clock: ic([['circle', { cx: 12, cy: 12, r: 9 }], 'M12 7v5l3 2'], 14),
+      clockL: ic([['circle', { cx: 12, cy: 12, r: 9 }], 'M12 7v5l3 2'], 17),
+      pause: ic([['rect', { x: 6, y: 5, width: 4, height: 14, rx: 1 }], ['rect', { x: 14, y: 5, width: 4, height: 14, rx: 1 }]], 13),
+      check: ic(['M20 6 9 17l-5-5'], 14),
+      checkC: ic([['circle', { cx: 12, cy: 12, r: 9 }], 'M8 12l3 3 5-6'], 17),
+      up: ic(['M12 19V5', 'M5 12l7-7 7 7'], 14),
+      down: ic(['M12 5v14', 'M19 12l-7 7-7-7'], 14),
+      grip: ic([['circle', { cx: 9, cy: 6, r: 1 }], ['circle', { cx: 15, cy: 6, r: 1 }], ['circle', { cx: 9, cy: 12, r: 1 }], ['circle', { cx: 15, cy: 12, r: 1 }], ['circle', { cx: 9, cy: 18, r: 1 }], ['circle', { cx: 15, cy: 18, r: 1 }]], 14),
+      left: ic(['M15 18l-6-6 6-6'], 16),
+      right: ic(['M9 18l6-6-6-6'], 16),
+      chev: ic(['M6 9l6 6 6-6'], 14),
+      more: ic([['circle', { cx: 5, cy: 12, r: 1 }], ['circle', { cx: 12, cy: 12, r: 1 }], ['circle', { cx: 19, cy: 12, r: 1 }]], 16),
+      x: ic(['M18 6 6 18', 'M6 6l12 12'], 16),
+      layers: ic(['M12 2 2 7l10 5 10-5z', 'M2 17l10 5 10-5', 'M2 12l10 5 10-5'], 17),
+      activity: ic(['M22 12h-4l-3 9L9 3l-3 9H2'], 17),
+      bars: ic(['M18 20V10', 'M12 20V4', 'M6 20v-6'], 17),
+      alert: ic(['M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z', 'M12 9v4', 'M12 17h.01'], 16),
+      info: ic([['circle', { cx: 12, cy: 12, r: 9 }], 'M12 16v-4', 'M12 8h.01'], 16),
+      menu: ic(['M3 6h18', 'M3 12h18', 'M3 18h18'], 20),
+      send: ic(['M22 2 11 13', 'M22 2l-7 20-4-9-9-4z'], 15),
+      edit: ic(['M12 20h9', 'M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z'], 15),
+      users: ic(['M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2', ['circle', { cx: 9, cy: 7, r: 4 }], 'M23 21v-2a4 4 0 0 0-3-3.9', 'M16 3.1a4 4 0 0 1 0 7.8'], 15),
+      cal: ic([['rect', { x: 3, y: 4, width: 18, height: 18, rx: 2 }], 'M16 2v4', 'M8 2v4', 'M3 10h18'], 15),
+      eye: ic(['M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z', ['circle', { cx: 12, cy: 12, r: 3 }]], 15),
+      ext: ic(['M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6', 'M15 3h6v6', 'M10 14 21 3'], 15),
+    };
+
+    const perfil = this.state.perfil || this.props.perfil || 'CEO';
+    const users = {
+      CEO: { initials: 'FS', name: 'Fernando Sartori', role: 'CEO' },
+      Diretor: { initials: 'VA', name: 'Vagner Araújo', role: 'Diretor · Jurídico' },
+      Colaborador: { initials: 'EG', name: 'Estephano Gobor', role: 'Colaborador · Operações' },
+    };
+    const gExec = { label: 'Visão executiva', items: [{ id: 'dashboard', label: 'Dashboard', icon: i.dash }, { id: 'bi', label: 'BI', icon: i.bi }, { id: 'ranking', label: 'Ranking', icon: i.trophy }] };
+    const gDem = { label: 'Demandas', items: [{ id: 'kanban', label: 'Kanban geral', icon: i.kanban, badge: 42 }, { id: 'minhas', label: 'Minhas demandas', icon: i.mine, badge: 4 }, { id: 'arquivo', label: 'Arquivo', icon: i.archive }] };
+    const gConta = { label: 'Configurações', items: [{ id: 'conta', label: 'Minha conta', icon: i.user }] };
+    const navBy = {
+      CEO: [gExec, gDem, { label: 'Decisão CEO', items: [{ id: 'aprovacao', label: 'Aprovação CEO', icon: i.approve, badge: 3, hot: true }, { id: 'planilha', label: 'Priorizar em planilha', icon: i.sheet }] }, { label: 'Configurações', items: [{ id: 'admin', label: 'Usuários e diretorias', icon: i.shield }, { id: 'conta', label: 'Minha conta', icon: i.user }] }],
+      Diretor: [gExec, gDem, { label: 'Ferramentas', items: [{ id: 'planilha', label: 'Priorizar em planilha', icon: i.sheet }] }, gConta],
+      Colaborador: [gDem, { label: 'Indicadores', items: [{ id: 'ranking', label: 'Ranking', icon: i.trophy }] }, gConta],
+    };
+
+    const WEEKS = ['27/07', '03/08', '10/08', '17/08', '24/08', '31/08', '07/09', '14/09', '21/09', '28/09', '05/10', '12/10'];
+    const dk = !this.state.light;
+    const C = { criadas: dk ? '#4F82E0' : '#2860C6', entregues: dk ? '#62AE73' : '#4C9A5E', aging: dk ? '#D49B32' : '#B07206', estoque: dk ? '#D3CEC4' : '#4A453D' };
+    const chart = (o) => {
+      const { w, hh = 220, max, ticks, fmt = (v) => String(v), series, type = 'line', tip } = o;
+      const L = 40, R = 10, T = 14, B = 30, iw = w - L - R, ih = hh - T - B, n = 12, bw = iw / n;
+      const X = (k) => L + bw * (k + 0.5), Y = (v) => T + ih - (v / max) * ih;
+      const els = [h('rect', { key: 'band', x: L + bw * 11, y: T, width: bw, height: ih, rx: 4, style: { fill: 'var(--neutral-soft)' } })];
+      ticks.forEach((t, k) => {
+        els.push(h('line', { key: 'g' + k, x1: L, x2: w - R, y1: Y(t), y2: Y(t), style: { stroke: 'var(--border-strong)' }, strokeDasharray: t === 0 ? null : '3 4' }));
+        els.push(h('text', { key: 't' + k, x: L - 8, y: Y(t) + 4, textAnchor: 'end', style: { font: '500 10.5px var(--font-mono)', fill: 'var(--faint)' } }, fmt(t)));
+      });
+      WEEKS.forEach((wk, k) => {
+        if (k % 2 === 0 || k === 11) els.push(h('text', { key: 'x' + k, x: X(k), y: hh - 9, textAnchor: 'middle', style: { font: (k === 11 ? '700' : '500') + ' 10.5px var(--font-ui)', fill: k === 11 ? 'var(--ink)' : 'var(--faint)' } }, k === 11 ? 'Atual' : wk));
+      });
+      series.forEach((s, si) => {
+        if (type === 'bar') {
+          s.data.forEach((v, k) => { if (!v) return; els.push(h('rect', { key: 'b' + si + '-' + k, x: X(k) - bw * 0.28, y: Y(v), width: bw * 0.56, height: T + ih - Y(v), rx: 3, fill: s.color, opacity: k === 11 ? 0.45 : 1 })); });
+          return;
+        }
+        const pts = s.data.map((v, k) => v == null ? null : [X(k), Y(v)]).filter(Boolean);
+        const d = pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+        if (s.area) els.push(h('path', { key: 'a' + si, d: d + ' L' + pts[pts.length - 1][0].toFixed(1) + ' ' + (T + ih) + ' L' + pts[0][0].toFixed(1) + ' ' + (T + ih) + ' Z', fill: s.color, opacity: 0.08 }));
+        els.push(h('path', { key: 'l' + si, d, fill: 'none', stroke: s.color, strokeWidth: 2.2, strokeDasharray: s.dash ? '6 4' : null, strokeLinejoin: 'round', strokeLinecap: 'round' }));
+        pts.forEach((p, k) => els.push(h('circle', { key: 'c' + si + '-' + k, cx: p[0], cy: p[1], r: 2.8, stroke: s.color, strokeWidth: 1.8, style: { fill: 'var(--surface)' } })));
+      });
+      if (tip) {
+        const x = X(tip.i), bx = x + 12, by = T + 4, tw = 168;
+        els.push(h('line', { key: 'tl', x1: x, x2: x, y1: T, y2: T + ih, stroke: '#1B1915', strokeOpacity: 0.25 }));
+        els.push(h('g', { key: 'tip' },
+          h('rect', { x: bx, y: by, width: tw, height: 30 + tip.rows.length * 19, rx: 8, fill: '#1B1915' }),
+          h('text', { x: bx + 12, y: by + 19, style: { font: '600 11px var(--font-ui)', fill: '#B7B1A4' } }, tip.title),
+          tip.rows.map((r, k) => h('g', { key: k },
+            h('circle', { cx: bx + 16, cy: by + 36 + k * 19, r: 4, fill: r.color }),
+            h('text', { x: bx + 27, y: by + 40 + k * 19, style: { font: '500 11.5px var(--font-ui)', fill: '#fff' } }, r.label),
+            h('text', { x: bx + tw - 12, y: by + 40 + k * 19, textAnchor: 'end', style: { font: '600 11.5px var(--font-mono)', fill: '#fff' } }, r.value)))));
+      }
+      return h('svg', { viewBox: '0 0 ' + w + ' ' + hh, width: '100%', style: { display: 'block', height: 'auto' } }, els);
+    };
+    const criadas = [0, 0, 0, 0, 14, 39, 21, 6, 11, 9, 5, 10];
+    const entregues = [0, 0, 0, 0, 0, 16, 6, 16, 14, 8, 6, 6];
+    const CH = {
+      ce: ({ w: 1072, hh: 260, max: 40, ticks: [0, 10, 20, 30, 40], series: [{ data: criadas, color: C.criadas }, { data: entregues, color: C.entregues, dash: true }], tip: { i: 5, title: 'Semana 31/08 a 06/09', rows: [{ label: 'Criadas', value: '39', color: C.criadas }, { label: 'Entregues', value: '16', color: C.entregues }] } }),
+      aging: ({ w: 508, max: 24, ticks: [0, 6, 12, 18, 24], series: [{ data: [null, null, null, null, 2, 5, 8.5, 15, 18, 20.5, 22.6, 23], color: C.aging, area: true }] }),
+      estoque: ({ w: 508, max: 60, ticks: [0, 20, 40, 60], series: [{ data: [0, 0, 0, 0, 14, 36, 51, 41, 38, 39, 38, 42], color: C.estoque, area: true }] }),
+      pct: ({ w: 1072, hh: 230, max: 100, ticks: [0, 25, 50, 75, 100], fmt: (v) => v + '%', series: [{ data: [100, 100, 100, 100, 30, 37, 35, 51, 60, 62, 65, 64.5], color: C.entregues, area: true }] }),
+      criadas: ({ w: 508, type: 'bar', max: 40, ticks: [0, 10, 20, 30, 40], series: [{ data: criadas, color: C.criadas }] }),
+      entregues: ({ w: 508, type: 'bar', max: 16, ticks: [0, 4, 8, 12, 16], series: [{ data: entregues, color: C.entregues }] }),
+    };
+    const big = this.lay().device !== 'Web';
+    const charts = {}; Object.keys(CH).forEach((k) => { charts[k] = chart(Object.assign({}, CH[k], { tip: CH[k].tip })); });
+    const exp = this.state.exp && CH[this.state.exp] ? chart(Object.assign({}, CH[this.state.exp], big ? { w: 800, hh: 290 } : { w: 1100, hh: 460 })) : null;
+
+
+    const card = (pos, title, sol, aging, farol, extra) => Object.assign({ pos, title, dir: 'Jurídico', sol, aging, farol, tone: { Verde: 'ok', Amarelo: 'warn', Vermelho: 'danger' }[farol], plain: true }, extra || {});
+    const fix = (c) => { if (c.paused || c.concl) c.plain = false; return c; };
+    const cols = [
+      { name: 'Aguardando aprovação CEO', count: 0, rail: true, dot: 'var(--faint)' },
+      { name: 'Aprovada / Pendente', count: 15, dot: 'var(--info)', groups: [
+        { prio: 'P0', fila: '11 na fila', cards: [card('1º', 'OCCAM - Registro AF - RTD', 'Vagner Araújo', '36 dias', 'Vermelho', { hover: true }), card('2º', 'Criminal Maycon', 'Fernando Sartori', '1 dia', 'Verde'), card('3º', 'Criminal Guilherme Pereira', 'Fernando Sartori', '1 dia', 'Verde'), card('4º', 'NN | Maria Polizello | Boa Esperança | Pimenta Bueno - RO', 'Caio Monteiro', '18 dias', 'Amarelo')] },
+        { prio: 'P1', fila: '4 na fila', cards: [card('1º', 'Revisão de procurações das filiais', 'Gabriel Cunali', '12 dias', 'Verde')] }] },
+      { name: 'Em andamento', count: 13, dot: 'var(--primary)', search: true, groups: [
+        { prio: 'P0', fila: '9 na fila', cards: [card('1º', 'Diligência de Filial - Fazenda Barreiro - Lucas Mendes - São Gonçalo do Sapucaí - MG', 'Estephano Gobor', '34 dias', 'Vermelho'), card('2º', 'ADITIVO CONTRATUAL // FABIANO VBA // CARA PRETA-MG', 'Gabriel Cunali', '22 dias', 'Vermelho'), card('3º', 'Termo de Quitação Parcial | Maria Polizello | Boa Esperança', 'Caio Monteiro', '16 dias', 'Amarelo'), card('4º', 'Contrato Acordo Glauco', 'Fernando Sartori', '6 dias', 'Verde')] }] },
+      { name: 'Aguardando terceiros', count: 14, dot: 'var(--warn)', groups: [
+        { prio: 'P0', fila: '13 na fila', cards: [card('1º', 'CONTRATO PARCERIA // FERNANDO FERREIRA DE OLIVEIRA // BOITEL RIBAS', 'Estephano Gobor', '0 dias', 'Verde', { paused: true, demandante: '14 dias' }), card('2º', 'Nota de Negociação 011 | Rafael Lima | ACVR | Cruzília - MG', 'Tarso Porfírio', '9 dias', 'Verde', { paused: true, demandante: '5 dias' }), card('3º', 'Auto de Infração CDA-SJRP 2140-012/2026', 'Vagner Araújo', '17 dias', 'Amarelo', { paused: true, demandante: '3 dias' })] }] },
+      { name: 'Concluída', count: 6, dot: 'var(--ok)', note: 'Sai do quadro 7 dias após a conclusão', groups: [
+        { prio: 'P0', fila: '6 concluídas', cards: [card(null, 'TERMO DE QUITAÇÃO PARCIAL - NN 022 - Gustavo Polizelli - confinamento Santa Cecília - Guzolândia - SP', 'Fábio Pratola', '3 dias', 'Verde', { concl: '15/10/2026' }), card(null, 'Nota de Negociação 010 | Rafael Lima | ACVR | Cruzília - MG', 'Tarso Porfírio', '5 dias', 'Verde', { concl: '15/10/2026' }), card(null, 'Contratos C6/Invista/3M', 'Fernando Sartori', '7 dias', 'Verde', { concl: '13/10/2026' })] }] },
+      { name: 'Recusada', count: 0, rail: true, dot: 'var(--danger)' },
+      { name: 'Cancelada', count: 0, rail: true, dot: 'var(--faint)' },
+    ];
+    cols.forEach((c) => { c.open = !c.rail; (c.groups || []).forEach((g) => g.cards.forEach(fix)); });
+    const mobileCards = cols[1].groups[0].cards.map((c) => Object.assign({}, c, { hover: false }));
+
+    const minhas = [
+      { title: 'Criminal Maycon', dir: 'Jurídico', etapa: 'Aprovada / Pendente', etapaTone: 'info', papel: 'Solicitante', prio: 'P0', aging: '1 dia', farol: 'Verde', tone: 'ok', resp: 'Vagner Araújo' },
+      { title: 'Criminal Guilherme Pereira', dir: 'Jurídico', etapa: 'Aprovada / Pendente', etapaTone: 'info', papel: 'Solicitante', prio: 'P0', aging: '1 dia', farol: 'Verde', tone: 'ok', resp: 'Vagner Araújo' },
+      { title: 'Contrato Acordo Glauco', dir: 'Jurídico', etapa: 'Aprovada / Pendente', etapaTone: 'info', papel: 'Solicitante', prio: 'P0', aging: '6 dias', farol: 'Verde', tone: 'ok', resp: 'Vagner Araújo' },
+      { title: 'Contratos C6/Invista/3M', dir: 'Jurídico', etapa: 'Concluída', etapaTone: 'ok', papel: 'Solicitante', prio: 'P0', aging: '7 dias', farol: 'Verde', tone: 'ok', resp: 'Vagner Araújo' },
+    ];
+
+    const arquivo = [
+      ['Nota de Negociação 010 | Rafael Lima | ACVR | Cruzília - MG', 'Tarso Porfírio', '15/10/2026', '5 dias'],
+      ['TERMO DE QUITAÇÃO PARCIAL - NN 022 - Gustavo Polizelli - confinamento Santa Cecília - Guzolândia - SP', 'Fábio Pratola', '15/10/2026', '3 dias'],
+      ['Contratos C6/Invista/3M', 'Fernando Sartori', '13/10/2026', '7 dias'],
+      ['NN | Maria Polizello | BOA ESPERANÇA | PIMENTA BUENO - RO', 'Caio Monteiro', '13/10/2026', '11 dias'],
+      ['ADITIVO CONTRATUAL // FABIANO VBA // CARA PRETA-MG', 'Gabriel Cunali', '13/10/2026', '9 dias'],
+      ['TERMO DE QUITAÇÃO TOTAL - NN 008 - Gustavo Polizelli - confinamento Santa Cecília - Guzolândia - SP', 'Fábio Pratola', '13/10/2026', '4 dias'],
+      ['Termo de Quitação Parcial | Maria Polizello | Boa Esperança | Pimenta Bueno - RO', 'Caio Monteiro', '09/10/2026', '6 dias'],
+      ['Contrato Acordo Glauco', 'Fernando Sartori', '09/10/2026', '2 dias'],
+      ['Auto de Infração CDA-SJRP 2138-047/2026', 'Vagner Araújo', '09/10/2026', '8 dias'],
+    ].map((r) => ({ title: r[0], sol: r[1], concl: r[2], res: r[3] }));
+
+    const P = (on) => ({ on, off: !on });
+    const adminUsers = [
+      ['Almir Paschoal', 'almir.paschoal@finpec.com', 'Colaborador', '—', 0, 0, 0],
+      ['Caio Monteiro', 'caio.monteiro@finpec.com', 'Colaborador', 'Mercado', 0, 0, 0],
+      ['Carlos Eduardo', 'carlos.eduardo@finpec.com', 'Colaborador', '—', 0, 0, 0],
+      ['Estephano Gobor', 'estephano.gobor@finpec.com', 'Colaborador', 'Operações', 1, 0, 1],
+      ['Fábio Pratola', 'fabio.pratola@finpec.com', 'Colaborador', 'Operações', 0, 0, 0],
+      ['Felipe Nave', 'felipe.nave@finpec.com', 'Colaborador', '—', 0, 0, 0],
+      ['Fernando Sartori', 'fernando.sartori@finpec.com', 'CEO', '—', 1, 1, 1],
+      ['Raphael Maciel', 'raphael.maciel@finpec.com', 'Diretor', 'Financeiro', 0, 0, 1],
+      ['Vagner Araújo', 'vagner.araujo@finpec.com', 'Diretor', 'Jurídico', 1, 1, 1],
+    ].map((r) => ({ name: r[0], email: r[1], perfil: r[2], ptone: r[2] === 'CEO' ? 'accent' : r[2] === 'Diretor' ? 'info' : 'neutral', dir: r[3], initials: r[0].split(' ').map((s) => s[0]).join('').slice(0, 2), sel: r[0] === 'Estephano Gobor', pl: P(!!r[4]), dv: P(!!r[5]), od: P(!!r[6]) }));
+
+    const comments = [
+      { who: 'Vagner Araújo', ini: 'VA', when: '22/09/2026, 22:49:43', kind: 'Solicitação ao demandante', tone: 'warn', text: 'Necessária complementação de informações.' },
+      { who: 'Estephano Gobor', ini: 'EG', when: '01/10/2026, 20:16:12', kind: 'Devolução do demandante', tone: 'info', text: 'Foi retornado comodato com ajustes do cliente, aguardando análise' },
+      { who: 'Vagner Araújo', ini: 'VA', when: '02/10/2026, 20:07:37', kind: 'Solicitação ao demandante', tone: 'warn', text: 'Devolvido para confirmação de seguimento.' },
+      { who: 'Estephano Gobor', ini: 'EG', when: '05/10/2026, 18:47:10', kind: 'Devolução do demandante', tone: 'info', text: 'Parceiro enviou uma solicitação via jurídico para análise' },
+    ];
+    const history = [
+      { st: 'Em andamento', who: 'Estephano Gobor', when: '05/10/2026 · 18:47:10', dot: 'var(--primary)', cur: true },
+      { st: 'Aguardando terceiros', who: 'Vagner Araújo', when: '02/10/2026 · 20:07:37', dot: 'var(--warn)' },
+      { st: 'Em andamento', who: 'Estephano Gobor', when: '01/10/2026 · 20:16:12', dot: 'var(--primary)' },
+      { st: 'Aguardando terceiros', who: 'Vagner Araújo', when: '22/09/2026 · 22:49:43', dot: 'var(--warn)' },
+      { st: 'Em andamento', who: 'Vagner Araújo', when: '22/09/2026 · 18:23:35', dot: 'var(--primary)' },
+      { st: 'Aprovada / Pendente', who: 'Fernando Sartori', when: '18/09/2026 · 19:04:29', dot: 'var(--info)' },
+    ];
+
+    const fila = [
+      { title: 'Revisão de contrato de comodato | Fazenda Barreiro', dir: 'Jurídico', sol: 'Estephano Gobor', when: '16/10/2026 · 08:42', sel: true },
+      { title: 'Conciliação de recebíveis CPRF set/26', dir: 'Financeiro', sol: 'Caio Monteiro', when: '15/10/2026 · 17:10', sel: false },
+      { title: 'Notificação extrajudicial | Boitel Ribas', dir: 'Jurídico', sol: 'Fábio Pratola', when: '15/10/2026 · 11:03', sel: false },
+    ];
+
+    const kpi = (label, value, unit, icon, tone, foot) => ({ label, value, unit, icon, tone, foot });
+    const brk = (title, rows, bar, unit, total) => {
+      const max = Math.max(...rows.map((r) => r[1]));
+      return { title, bar, total: total || '', rows: rows.map((r) => ({ label: r[0], value: String(r[1]).replace('.', ',') + (unit || ''), w: Math.max(2, (r[1] / max) * 100).toFixed(1) + '%' })) };
+    };
+    const terceiros = [
+      brk('Demandas por demandante', [['Estephano Gobor', 8], ['Fábio Pratola', 1], ['Gabriel Cunali', 1], ['Henrique Arantes', 1], ['Michel Torteli', 1]], 'var(--warn)'),
+      brk('Aging médio por demandante', [['Fábio Pratola', 37], ['Henrique Arantes', 35], ['Michel Torteli', 31], ['Estephano Gobor', 28.5], ['Gabriel Cunali', 27]], 'var(--warn)', ' dias'),
+    ];
+    const distrib = [
+      brk('Demandas por diretoria', [['Jurídico', 138], ['Financeiro', 3], ['Tecnologia/TI', 3]], 'var(--primary)', '', '144'),
+      brk('Demandas por prioridade', [['P0', 130], ['P1', 11], ['P2', 2], ['Aguardando prioridade', 1]], 'var(--primary)', '', '144'),
+      brk('Backlog por diretoria', [['Jurídico', 57], ['Financeiro', 1]], 'var(--primary)', '', '58'),
+    ];
+    const prazo = [
+      brk('Vencidas por prioridade', [['P0', 13], ['P1', 8]], 'var(--danger)', '', '21'),
+      brk('Vencidas por diretoria', [['Jurídico', 20], ['Financeiro', 1]], 'var(--danger)', '', '21'),
+      brk('Resolução média por diretoria', [['Jurídico', 6.2], ['Tecnologia/TI', 10.7], ['Financeiro', 8]], 'var(--ok)', ' dias'),
+    ];
+    const flow = (defs, cur) => defs.map((d, k) => {
+      const nx = defs[k + 1];
+      return { n: k + 1, label: d.t, meta: d.m || '—', who: d.w || '', note: d.note || '',
+        done: k < cur, cur: k === cur, notCur: k !== cur, todo: k > cur && !d.term, term: !!d.term,
+        line: !!nx && !nx.term, lineDash: !!nx && !!nx.term, lineColor: k < cur ? 'var(--primary)' : 'var(--border-strong)' };
+    });
+    const term = { t: 'Recusada / Cancelada', term: true };
+    const stepsDetalhe = flow([{ t: 'Aguardando aprovação CEO', m: '10/09, 09:12', w: 'Estephano Gobor' }, { t: 'Aprovada / Pendente', m: '18/09, 19:04', w: 'Fernando Sartori' }, { t: 'Em andamento', m: '05/10, 18:47', w: 'Estephano Gobor', note: '2 esperas por terceiros' }, { t: 'Concluída' }, term], 2);
+    const stepsNova = flow([{ t: 'Aguardando aprovação CEO', m: 'ao criar', w: 'Fernando Sartori' }, { t: 'Aprovada / Pendente', m: 'CEO define P0–P2' }, { t: 'Em andamento', m: 'diretoria executa' }, { t: 'Concluída' }, { t: 'Recusada', term: true }], 0);
+    const stepsAprov = flow([{ t: 'Aguardando aprovação CEO', m: '16/10, 08:42', w: 'Estephano Gobor' }, { t: 'Aprovada / Pendente' }, { t: 'Em andamento' }, { t: 'Concluída' }, term], 0);
+    return {
+      expChartEl: exp,
+      flowFn: flow, i, charts, cols, terceiros, distrib, prazo, stepsDetalhe, stepsNova, stepsAprov, mobileCards, minhas, arquivo, adminUsers, comments, history, fila,
+      nav: navBy[perfil] || navBy.CEO,
+      user: users[perfil] || users.CEO,
+      perfil,
+      notes: this.props.mostrarNotas ?? true,
+      noop: () => {},
+      dashKpis: [
+        kpi('Aging médio aberto', '22,7', 'dias', i.clockL, 'warn', 'desconta espera por terceiros'),
+        kpi('Tempo médio de resolução', '6,4', 'dias', i.activity, 'primary', 'criação até conclusão'),
+        kpi('% concluído', '59%', null, i.checkC, 'primary', '85 de 144 criadas'),
+        kpi('% concluídas no verde', '87,1%', null, i.checkC, 'ok', 'dentro do prazo do farol'),
+        kpi('% abertas no vermelho', '36,2%', null, i.alert, 'danger', '21 de 58 abertas'),
+      ],
+      biKpis: [
+        kpi('Estoque atual', '42', null, i.layers, 'primary', '38 no fechamento anterior'),
+        kpi('Aging médio aberto', '23', 'dias', i.clockL, 'warn', '22,6 dias no fechamento anterior'),
+        kpi('Percentual entregue', '64,5%', null, i.checkC, 'ok', '78 concluídas de 121 criadas'),
+        kpi('Criadas nesta semana', '10', null, i.bars, 'primary', '5 na anterior · parcial'),
+        kpi('Entregues nesta semana', '6', null, i.activity, 'ok', '6 na anterior · parcial'),
+      ],
+      volume: [
+        { label: 'Criadas', value: '144' }, { label: 'Aprovadas', value: '143' }, { label: 'Recusadas', value: '1' }, { label: 'Concluídas', value: '85' }, { label: 'Abertas', value: '58' },
+      ],
+      vermelhas: [
+        { title: 'OCCAM - Registro AF - RTD', etapa: 'Aprovada / Pendente', aging: '36 dias', resp: 'Vagner Araújo' },
+        { title: 'Diligência de Filial - Fazenda Barreiro - Lucas Mendes - São Gonçalo do Sapucaí - MG', etapa: 'Em andamento', aging: '34 dias', resp: 'Vagner Araújo' },
+        { title: 'ADITIVO CONTRATUAL // FABIANO VBA // CARA PRETA-MG', etapa: 'Em andamento', aging: '22 dias', resp: 'Gabriel Cunali' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
